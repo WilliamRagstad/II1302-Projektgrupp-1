@@ -1,0 +1,1 @@
+Lägg alla filer som kommer användas i Wiki i den här mappen.
