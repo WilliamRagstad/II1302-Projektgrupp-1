@@ -10,4 +10,5 @@ Ludvig Lindén - Testansvarig
 
 Basel M. - Arkitekt
 
+Amanda Koinberg - Projekt Manager
 
