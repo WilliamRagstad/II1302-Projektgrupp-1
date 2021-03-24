@@ -6,6 +6,4 @@ Viktor S - Arbetsmiljö/MHU.
 
 Kristoffer B, - kravansvarig
 
-Amanda Koinberg - Project Manager
-
-Basel M. - Arkitekt
+Ludvig Lindén - Testansvarig
