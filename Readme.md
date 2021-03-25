@@ -1,4 +1,4 @@
-# AirDash AB
+# AirDash
 
 II1302 Avancerad projektgrupp 1.
 
