@@ -8,3 +8,4 @@ En smart dashcam - som kan spela in video och skicka de senaste 5-10 sekunderna 
 
 ## Dokumentation
 
+Läs hela dokumentationen på [Wiki](https://github.com/WilliamRagstad/II1302-Projektgrupp-1/wiki).
