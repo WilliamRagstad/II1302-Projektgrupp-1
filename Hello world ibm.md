@@ -1,1 +1,1 @@
-Link to hello world example on IBM cloud: [Here]()
+Link to hello world example on IBM cloud: [Hello World]()
