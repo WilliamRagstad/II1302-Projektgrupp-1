@@ -11,7 +11,7 @@ const app = new Application();
 console.log("http://localhost:" + HOST_PORT + "/");
 
 app
-	.static("/", "pages")
+	.file("/", "pages/fuck.html")
 	.get("/hello", () => {
 		return "Hello, Abc!";
 	})
