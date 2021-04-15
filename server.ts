@@ -15,7 +15,8 @@ console.log("http://localhost:" + HOST_PORT + "/");
 app
 	.static("/", "./pages")
 	.file("/", "pages/index.html")
+	.file("/scripts/heatmap.js", "scripts/heatmap.js")
 	.get("/hello", () => {
-		return "Hello, Abc!";
+		return "Hello World";
 	})
 	.start({ port: HOST_PORT });

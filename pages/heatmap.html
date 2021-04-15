@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heatmaps</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  </head>
+  <body>
+    Hello Heatmap1
+    <div id="map"></div>
+
+  </body>
+  <style>
+  #map {
+height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+height: 100%;
+margin: 0;
+padding: 0;
+}
+  </style>
+  <script src="/scripts/heatmap.js"></script>
+
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUGs18PTytkKbrwv-I3y6s-P0WfENdW0w&callback=initMap&libraries=visualization&v=weekly"
+    async
+  ></script>
+</html>
