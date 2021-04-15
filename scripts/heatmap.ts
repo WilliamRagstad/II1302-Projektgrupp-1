@@ -1,3 +1,4 @@
+import { google, document } from "./_helper.ts";
 
 let map;
 
