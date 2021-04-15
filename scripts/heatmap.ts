@@ -1,7 +1,7 @@
 declare global {
 	interface Window {
 		document: any,
-		google: any;
+		google: any
 	}
 }
 
