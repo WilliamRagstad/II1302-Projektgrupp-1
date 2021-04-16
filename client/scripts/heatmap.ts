@@ -1,4 +1,4 @@
-import { HEATMAP_DATA } from '../data/wdata.ts';
+import { HEATMAP_DATA } from '../../data/wdata.ts';
 
 declare global {
 	interface Window {

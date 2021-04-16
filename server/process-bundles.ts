@@ -1,4 +1,4 @@
-const bundlesFolder = "scripts/bundles";
+const bundlesFolder = "client/scripts/bundles";
 for await (const file of Deno.readDir(bundlesFolder)) {
 	try {
 		console.log("Found: " + file.name);

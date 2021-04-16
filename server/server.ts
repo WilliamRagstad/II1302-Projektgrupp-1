@@ -13,12 +13,12 @@ console.log("http://localhost:" + HOST_PORT + "/");
 // Using Abc library: https://doc.deno.land/https/deno.land/x/abc/mod.ts
 // Library repository: https://github.com/zhmushan/abc
 app
-	.static("/", "pages")
-	.static("/scripts/", "scripts")
-	.static("/style/", "style")
-	.file("/", "pages/index.html")
-	.file("/contact", "pages/contact.html")
-	.file("/heatmap", "pages/heatmap.html")
+	.static("/", "client/pages")
+	.static("/scripts/", "client/scripts")
+	.static("/style/", "client/style")
+	.file("/", "client/pages/index.html")
+	.file("/contact", "client/pages/contact.html")
+	.file("/heatmap", "client/pages/heatmap.html")
 	.get("/hello", () => {
 		return "Hello World";
 	})
