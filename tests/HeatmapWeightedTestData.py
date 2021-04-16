@@ -13,9 +13,9 @@ for x in range(100):
     lattitude = (random.randint(-1000, 1000)/10000)+lat
     weight = random.randint(1, 10)
     coordinate = str("%.4f" % longitude)+", "+str("%.4f" % lattitude)
-    print("{location: new google.maps.LatLng("+coordinate+"), weight:"+str(weight)+"},")
+    print("{location: new window.google.maps.LatLng("+coordinate+"), weight:"+str(weight)+"},")
 
-print("{location: new google.maps.LatLng("+coordinate+"), weight:"+str(weight)+"}")
+print("{location: new window.google.maps.LatLng("+coordinate+"), weight:"+str(weight)+"}")
 print("]")
 sys.stdout = orig_stdout
 f.close()
