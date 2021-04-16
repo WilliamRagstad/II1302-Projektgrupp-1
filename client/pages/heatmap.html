@@ -9,8 +9,19 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 <body>
-	<h1>Stockholm Crash Heatmap</h1>
-  <div id="map"></div>
+	<div class="flex-parent">
+		<div class="flex-child">
+			<h1>Stockholm Crash <span>Heatmap</span></h1>
+			<div class="nav-buttons">
+				<h2>Heatmap</h2>
+				<h2>Recordings</h2>
+				<h2>About us</h2>
+			</div>
+			<div class="main-content">
+				<div id="map"></div>
+			</div>
+		</div>
+	</div>
 </body>
 <script src="/scripts/bundles/heatmap.bundle.js"></script>
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
