@@ -7,12 +7,17 @@
 	<link rel="stylesheet" href="style/main.css">
 	<title>Heatmap</title>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
 </head>
 <body>
 	<h1>Stockholm Crash Heatmap</h1>
   <div id="map"></div>
+
 </body>
 <script src="/scripts/bundles/heatmap.bundle.js"></script>
+<script src="/scripts/firebase.js"></script>
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUGs18PTytkKbrwv-I3y6s-P0WfENdW0w&callback=initMap&libraries=visualization&v=weekly" async></script>
+
 </html>
