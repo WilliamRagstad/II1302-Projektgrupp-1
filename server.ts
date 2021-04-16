@@ -17,6 +17,8 @@ app
 	.static("/scripts/", "scripts")
 	.static("/style/", "style")
 	.file("/", "pages/index.html")
+	.file("/contact", "pages/contact.html")
+	.file("/heatmap", "pages/heatmap.html")
 	.get("/hello", () => {
 		return "Hello World";
 	})
