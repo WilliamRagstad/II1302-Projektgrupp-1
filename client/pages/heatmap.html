@@ -11,9 +11,19 @@
 	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
 </head>
 <body>
-	<h1>Stockholm Crash Heatmap</h1>
-  <div id="map"></div>
-
+	<div class="flex-parent">
+		<div class="flex-child">
+			<h1>Stockholm Crash <span>Heatmap</span></h1>
+			<div class="nav-buttons">
+				<h2>Heatmap</h2>
+				<h2>Recordings</h2>
+				<h2>About us</h2>
+			</div>
+			<div class="main-content">
+				<div id="map"></div>
+			</div>
+		</div>
+	</div>
 </body>
 <script src="/scripts/bundles/heatmap.bundle.js"></script>
 <script src="/scripts/firebase.js"></script>

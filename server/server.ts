@@ -13,7 +13,6 @@ console.log("http://localhost:" + HOST_PORT + "/");
 // Using Abc library: https://doc.deno.land/https/deno.land/x/abc/mod.ts
 // Library repository: https://github.com/zhmushan/abc
 app
-	.static("/", "client/pages")
 	.static("/scripts/", "client/scripts")
 	.static("/style/", "client/style")
 	.file("/", "client/pages/index.html")
