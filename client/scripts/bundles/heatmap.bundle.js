@@ -50,9 +50,6 @@ function initMap() {
         heatmap.setMap(map);
     });
 }
-const wait = (ms)=>new Promise((resolve)=>setTimeout(resolve, ms)
-    )
-;
 function createHeatmap(list) {
     let heatmap_data = new Array();
     list.forEach((coordinate)=>heatmap_data.push(new window.google.maps.LatLng(coordinate.lat, coordinate.long))
