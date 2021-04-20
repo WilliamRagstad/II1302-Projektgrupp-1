@@ -6,10 +6,22 @@ import type { GoogleAuthToken, ServiceAccountKey } from "./types.ts";
  * API Documentation for Firebase
  *
  * Firestore:
- * https://cloud.google.com/firestore/docs/reference/rest
+ * 	https://cloud.google.com/firestore/docs/reference/rest
+ * 	https://firebase.google.com/docs/firestore/reference/rest
+ * 	https://firebase.google.com/docs/firestore/use-rest-api
  *
  * Storage:
- * https://cloud.google.com/storage/docs/json_api/v1
+ * 	https://cloud.google.com/filestore/docs/reference/rest
+ * 	https://cloud.google.com/storage/docs/json_api/v1
+ * 	https://firebase.google.com/docs/reference/rest/storage/rest
+ *
+ * REST Reference
+ * 	https://firebase.google.com/docs/projects/api/reference/rest
+ *
+ * ----------------------------------------------------------------
+ *
+ * Project ID
+ * 	https://firebase.google.com/docs/projects/learn-more#project-id
  *
 *******************************************/
 const FirestoreVersion = "v1";
