@@ -1,5 +1,7 @@
-import { getClient } from '../lib/firebaseWrapper.ts';
+import { getFirebaseClient } from '../lib/firebaseWrapper.ts';
 
+//! Must be kept secret!
+// https://console.firebase.google.com/u/1/project/airdash-eb4f7/settings/serviceaccounts/adminsdk Generated private key
 const serviceAccountKey = {
 	"type": "service_account",
 	"project_id": "airdash-eb4f7",
@@ -12,11 +14,10 @@ const serviceAccountKey = {
 	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
 	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-z01bv%40airdash-eb4f7.iam.gserviceaccount.com"
 };
-
-const client = await getClient(serviceAccountKey);
-
+const client = await getFirebaseClient(serviceAccountKey);
+/*
 console.log(client);
-console.log((await client.Firestore.GetDocuments('testdata/0Ss4dMvTDpRJGq2jGB6q')));
+console.log((await client.Firestore.GetPath('testdata/0Ss4dMvTDpRJGq2jGB6q')));
 
 client.Firestore.UpdateDocumentFields('test/test', {
 	inserted: {
@@ -29,6 +30,8 @@ console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
 		stringValue: "Hello!"
 	}
 }));
+*/
+console.log(await client.Storage.Metadata('mac-1/cat.jpg'))
 
 
 /*

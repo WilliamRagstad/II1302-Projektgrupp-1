@@ -5,27 +5,32 @@ import type { GoogleAuthToken, ServiceAccountKey } from "./types.ts";
 /******************************************
  * API Documentation for Firebase
  *
+ * Firestore:
  * https://cloud.google.com/firestore/docs/reference/rest
  *
+ * Storage:
+ * https://cloud.google.com/storage/docs/json_api/v1
+ *
 *******************************************/
-const FirestoreAPIVersion = "v1";
+const FirestoreVersion = "v1";
+const StorageVersion = "v0";
 
 
-class Client {
+class FirebaseClient {
 	token: string;
 	baseUri: string;
 	firestore: string;
 	authDomain: string;
-	storageBucket: string;
+	storage: string;
 
 	constructor(token: string, projectId: string) {
 		this.token = token;
 
 		// https://firebase.google.com/docs/projects/learn-more#project-id
 		this.baseUri = `https://${projectId}.firebaseio.com`;
-		this.firestore = `https://firestore.googleapis.com/${FirestoreAPIVersion}/projects/${projectId}/databases/(default)/`;
+		this.firestore = `https://firestore.googleapis.com/${FirestoreVersion}/projects/${projectId}/databases/(default)/`;
 		this.authDomain = `https://${projectId}.firebaseapp.com`;
-		this.storageBucket = `https://${projectId}.appspot.com`;
+		this.storage = `https://firebasestorage.googleapis.com/${StorageVersion}/b/${projectId}.appspot.com/`;
 	}
 
 	public Base = {
@@ -61,11 +66,11 @@ class Client {
 			return await res.json();
 		},
 		/**
-		 * Get a document or collection.
+		 * Get a document or collection from path.
 		 * @param path Path to resource.
 		 * @returns The result of the request.
 		 */
-		GetDocuments: (path: string) => this.Firestore.Request("documents/" + path, 'GET'),
+		GetPath: (path: string) => this.Firestore.Request("documents/" + path, 'GET'),
 		/**
 		 * Updated fields in a document.
 		 * @param docPath The document path.
@@ -81,6 +86,19 @@ class Client {
 		 * @returns The new document.
 		 */
 		CreateDocument: (collectionPath: string, documentID?: string, fields?: Record<string, unknown>) => this.Firestore.Request(`documents/${collectionPath}${documentID == undefined ? '' : `?documentId=${documentID}`}`, 'POST', fields && { fields: fields })
+	}
+
+	public Storage = {
+		Request: async (path: string, method: string, body?: Record<string, unknown>, toJSON: boolean = true): Promise<any> => {
+			const options: RequestInit = { method };
+			if (typeof body !== "undefined") options.body = JSON.stringify(body);
+			console.log("Sending request to: " + `${this.storage}${path}`)
+			const res = await fetch(`${this.storage}${path}`, options);
+			return toJSON ? await res.json() : res;
+		},
+		SerializeURI: (uri: string) => uri.replaceAll('/', '%2F'),
+		Metadata: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}`, 'GET'),
+		Download: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}?alt=media`, 'GET', undefined, false)
 	}
 }
 
@@ -134,7 +152,7 @@ const retrieveGoogleAuthToken = async (
 	return data;
 };
 
-const getClient = async (serviceAccountKey: ServiceAccountKey): Promise<Client> => {
+const getFirebaseClient = async (serviceAccountKey: ServiceAccountKey): Promise<FirebaseClient> => {
 	// Generate jwt and retrieve auth token
 	console.log("Retrieving Google oAuth token...");
 	const jwt: string = await createSignedJWT(serviceAccountKey);
@@ -142,9 +160,9 @@ const getClient = async (serviceAccountKey: ServiceAccountKey): Promise<Client> 
 		jwt,
 		serviceAccountKey,
 	);
-	console.log("Done...");
+	console.log("Done! Generating Client...");
 
-	return new Client(token.access_token, serviceAccountKey.project_id);
+	return new FirebaseClient(token.access_token, serviceAccountKey.project_id);
 };
 
-export { Client, getClient };
+export { getFirebaseClient };
