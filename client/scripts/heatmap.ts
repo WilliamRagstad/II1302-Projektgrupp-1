@@ -1,4 +1,3 @@
-import { Codec } from "../../shared/codec.ts";
 import { API } from './api.ts';
 
 declare global {

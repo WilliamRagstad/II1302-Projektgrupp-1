@@ -66,11 +66,5 @@ export function firebaseHandler() {
 		{lat: 59.3345, long: 18.0723},
 		{lat: 59.3346, long: 18.0722}
 	]
-	/*
-	return Codec.Stringify([
-		{lat: () => 59.3345, lng: () => 18.0723},
-		{lat: () => 59.3346, lng: () => 18.0722}
-	])
-	*/
 	//return await getCoordinates();
 }
