@@ -2,8 +2,13 @@ import { createJWT, encodeUrl, getNumericDateJWT } from "./deps.ts";
 import type { GoogleAuthToken, ServiceAccountKey } from "./types.ts";
 
 
-
-
+/******************************************
+ * API Documentation for Firebase
+ *
+ * https://cloud.google.com/firestore/docs/reference/rest
+ *
+*******************************************/
+const FirestoreAPIVersion = "v1";
 
 
 class Client {
@@ -18,7 +23,7 @@ class Client {
 
 		// https://firebase.google.com/docs/projects/learn-more#project-id
 		this.baseUri = `https://${projectId}.firebaseio.com`;
-		this.firestore = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/`;
+		this.firestore = `https://firestore.googleapis.com/${FirestoreAPIVersion}/projects/${projectId}/databases/(default)/`;
 		this.authDomain = `https://${projectId}.firebaseapp.com`;
 		this.storageBucket = `https://${projectId}.appspot.com`;
 	}
@@ -49,7 +54,7 @@ class Client {
 		 * @param body HTTP body for the request.
 		 * @returns Result of the request.
 		 */
-		Request: async <K, T>(path: string, method: string, body?: T): Promise<K> => {
+		Request: async (path: string, method: string, body?: Record<string, unknown>): Promise<any> => {
 			const options: RequestInit = { method };
 			if (typeof body !== "undefined") options.body = JSON.stringify(body);
 			const res = await fetch(`${this.firestore}${path}`, options);
@@ -60,14 +65,22 @@ class Client {
 		 * @param path Path to resource.
 		 * @returns The result of the request.
 		 */
-		GetDocuments: (path: string) => this.Firestore.Request<any, undefined>("documents/" + path, 'GET'),
+		GetDocuments: (path: string) => this.Firestore.Request("documents/" + path, 'GET'),
 		/**
 		 * Updated fields in a document.
 		 * @param docPath The document path.
 		 * @param updatedFields Optional fields to update. Values must follow this syntax specification: https://cloud.google.com/firestore/docs/reference/rest/v1beta1/Value.
 		 * @returns The updated document.
 		 */
-		UpdateDocumentFields: (docPath: string, updatedFields: object) => this.Firestore.Request<any, object>("documents/" + docPath, 'PATCH', { fields: updatedFields })
+		UpdateDocumentFields: (docPath: string, updatedFields: Record<string, unknown>) => this.Firestore.Request("documents/" + docPath, 'PATCH', { fields: updatedFields }),
+		/**
+		 * Created a new document in a specific collection.
+		 * @param collectionPath Collection path in which to create the document.
+		 * @param documentID Document ID.
+		 * @param fields Optional pre-filled fields for the document.
+		 * @returns The new document.
+		 */
+		CreateDocument: (collectionPath: string, documentID?: string, fields?: Record<string, unknown>) => this.Firestore.Request(`documents/${collectionPath}${documentID == undefined ? '' : `?documentId=${documentID}`}`, 'POST', fields && { fields: fields })
 	}
 }
 

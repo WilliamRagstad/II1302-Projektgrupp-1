@@ -24,6 +24,12 @@ client.Firestore.UpdateDocumentFields('test/test', {
 	}
 });
 
+console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
+	sampleData: {
+		stringValue: "Hello!"
+	}
+}));
+
 
 /*
 class Coordinate {
