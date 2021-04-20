@@ -9,7 +9,6 @@ let map;
 async function initMap() {
     var stockholm = new window.google.maps.LatLng(59.3293235, 18.0685808);
     const HEATMAP_DATA = await API.Get('/data');
-    console.log(HEATMAP_DATA);
     map = new window.google.maps.Map(window.document.getElementById('map'), {
         center: stockholm,
         zoom: 11,
