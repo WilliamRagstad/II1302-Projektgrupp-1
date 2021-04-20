@@ -59,7 +59,10 @@ async function getCoordinates(){
   return data;
 }
 */
-export async function firebaseHandler() {
-  return [];
+export function firebaseHandler() {
+	return [
+		{Lng: 123, Lat: 33234},
+		{Lng: 325, Lat: -543}
+	];
 	//return await getCoordinates();
 }

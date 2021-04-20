@@ -1,8 +1,15 @@
+const API = {
+    Get: async function(endpoint) {
+        const response = await fetch(endpoint.startsWith('/') ? endpoint : `/${endpoint}`);
+        const data = await response.json();
+        return data;
+    }
+};
 let map;
 async function initMap() {
     var stockholm = new window.google.maps.LatLng(59.3293235, 18.0685808);
-    const response = await fetch('/data');
-    const HEATMAP_DATA = await response.json();
+    const HEATMAP_DATA = await API.Get('/data');
+    console.log(HEATMAP_DATA);
     map = new window.google.maps.Map(window.document.getElementById('map'), {
         center: stockholm,
         zoom: 11,
