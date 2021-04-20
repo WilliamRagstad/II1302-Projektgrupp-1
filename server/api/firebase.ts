@@ -1,8 +1,5 @@
-declare global {
-	interface Window {
-		firebase: any
-  	}
-}
+/*
+import firebase from 'https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js';
 
   var firebaseConfig = {
     apiKey: "AIzaSyBI1xMKhZzzEbOeq5NwKTu3bNJQzAQqM6U",
@@ -14,8 +11,8 @@ declare global {
     measurementId: "G-KTT3J57LNB"
   };
   // Initialize Firebase and firestore
-  window.firebase.initializeApp(firebaseConfig);
-  var db = window.firebase.firestore();
+  firebase.initializeApp(firebaseConfig);
+  var db =firebase.firestore();
 
 class Coordinate {
   lat:number;
@@ -52,7 +49,7 @@ function setCoordinates(list:any[]):void {
 }
 
 //Retrieves all coordinates from Firestore in object form
-export async function getCoordinates(){
+async function getCoordinates(){
   const data:any[] = [];
   await db.collection("testdata").get().then((querySnapshot:any) => {
       querySnapshot.forEach((doc:any) => {
@@ -60,4 +57,9 @@ export async function getCoordinates(){
         });
       });
   return data;
+}
+*/
+export async function firebaseHandler() {
+  return [];
+	//return await getCoordinates();
 }

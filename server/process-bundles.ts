@@ -1,4 +1,5 @@
 const bundlesFolder = "client/scripts/bundles";
+
 for await (const file of Deno.readDir(bundlesFolder)) {
 	try {
 		console.log("Found: " + file.name);
@@ -6,7 +7,7 @@ for await (const file of Deno.readDir(bundlesFolder)) {
 		let code = new TextDecoder("utf-8").decode(await Deno.readFile(path));
 		// Find exports
 		let exportsIndex;
-		while ((exportsIndex = code.indexOf("export")) != -1) {
+		while ((exportsIndex = code.indexOf("export ")) != -1) {
 			let exportsExpr = "";
 			for (let i = exportsIndex; i < code.length; i++) {
 				const c = code[i];
