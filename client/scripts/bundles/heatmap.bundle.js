@@ -19,9 +19,7 @@ async function initMap() {
     });
     heatmap.setMap(map);
 }
-function createHeatmap(list) {
-    let heatmap_data = new Array();
-    list.forEach((coordinate)=>heatmap_data.push(new window.google.maps.LatLng(coordinate.lat, coordinate.long))
+function createHeatmap(data) {
+    return data.map((c)=>new window.google.maps.LatLng(c.lat, c.long)
     );
-    return heatmap_data;
 }

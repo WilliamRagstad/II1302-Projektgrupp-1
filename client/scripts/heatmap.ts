@@ -1,3 +1,4 @@
+import { Codec } from "../../shared/codec.ts";
 import { API } from './api.ts';
 
 declare global {
@@ -28,10 +29,6 @@ export async function initMap() {
 }
 
 //Transforms the firestore data to heatmap data
-function createHeatmap(list:any[]) {
-	let heatmap_data = new Array();
-	list.forEach(coordinate=>
-		heatmap_data.push(new window.google.maps.LatLng(coordinate.lat, coordinate.long))
-	);
-	return heatmap_data;
+function createHeatmap(data: any[]): any[] {
+	return data.map(c => new window.google.maps.LatLng(c.lat, c.long))
 }
