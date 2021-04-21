@@ -39,9 +39,9 @@ interface Coordinate {
 }
 
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
-	var raw_data = await client.Firestore.GetPath('testdata', maxCount);
-	if (raw_data.documents == undefined || raw_data.documents.length == 0) return await [];
-	return raw_data.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
+	const rawData = await client.Firestore.GetPath('testdata', maxCount);
+	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
+	return rawData.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
 }
 
 export async function firebaseHandler() {
