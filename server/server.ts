@@ -15,6 +15,7 @@ console.log("http://localhost:" + HOST_PORT + "/");
 app
 	.static("/scripts/", "client/scripts")
 	.static("/style/", "client/style")
+	.static("/assets/", "client/assets")
 	.file("/", "client/pages/index.html")
 	.file("/contact", "client/pages/contact.html")
 	.file("/heatmap", "client/pages/heatmap.html")
