@@ -110,6 +110,7 @@ class FirebaseClient {
 		},
 		SerializeURI: (uri: string) => uri.replaceAll('/', '%2F'),
 		Metadata: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}`, 'GET'),
+		GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
 		Download: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}?alt=media`, 'GET', undefined, false)
 	}
 }

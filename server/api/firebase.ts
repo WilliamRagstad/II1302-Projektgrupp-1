@@ -32,6 +32,8 @@ console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
 }));
 */
 // console.log(await client.Storage.Metadata('mac-1/cat.jpg'))
+// console.log(client.Storage.GetLink('mac-1/cat.jpg'));
+
 
 interface Coordinate {
 	lat: number;
