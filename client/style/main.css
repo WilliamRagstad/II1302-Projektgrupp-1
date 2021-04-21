@@ -2,6 +2,25 @@ body{
   background-color: #FFFFFF;
 }
 
+.background{
+  z-index: -2;
+}
+
+.top-polygon{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 30%;
+}
+
+.bottom-polygon{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 30%;
+  transform: rotate(180deg);
+}
+
 .flex-parent {
   display: flex;
   justify-content: center;
@@ -9,6 +28,7 @@ body{
 }
 
 .flex-child{
+  z-index: 0;
   margin-left: 10px;
   margin-right: 10px;
   flex-basis: 1000px;
