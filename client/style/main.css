@@ -73,6 +73,20 @@ h2 a, h1 a, h2 a:hover, h1 a:hover, h2 a:visited, h2 a:visited, h2 a:active, h2 
   margin: 0 auto;
 }
 
+.recordings-table{
+  width: 100%;
+  border: 3px solid black;
+  text-align: left;
+  border-collapse: collapse;
+  background-color: #e2d7d7;
+}
+
+.recordings-table tr, .recordings-table tr th, .recordings-table tr td{
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
 #map {
   height: 100%;
 }
