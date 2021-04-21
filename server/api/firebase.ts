@@ -15,6 +15,14 @@ const serviceAccountKey = {
 	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-z01bv%40airdash-eb4f7.iam.gserviceaccount.com"
 };
 const client = await getFirebaseClient(serviceAccountKey);
+class Coordinate {
+  lat:number;
+  long:number;
+  constructor (lat:number, long:number) {
+	this.lat = lat;
+	this.long = long;
+  }
+};
 /*
 console.log(client);
 console.log((await client.Firestore.GetPath('testdata/0Ss4dMvTDpRJGq2jGB6q')));
@@ -33,17 +41,19 @@ console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
 */
 console.log(await client.Storage.Metadata('mac-1/cat.jpg'))
 
+export async function getCoordinates(){
+	var raw_data = await client.Firestore.GetPath('testdata');
+	var HEATMAP_DATA:Coordinate[] = [];
+	await raw_data.documents.forEach((data:any) =>
+		HEATMAP_DATA.push(new Coordinate(data.fields.lat.doubleValue, data.fields.long.doubleValue))
+	)
+	return await HEATMAP_DATA
+}
+console.log(await getCoordinates());
+console.log(await client.Firestore.GetDocuments("Test"));
+
 
 /*
-class Coordinate {
-  lat:number;
-  long:number;
-  constructor (lat:number, long:number) {
-	this.lat = lat;
-	this.long = long;
-  }
-};
-
 //Converts Coordinate from JSON to an object and back.
 var coordinateConverter = {
   toFirestore: function(coordinate:Coordinate) {
@@ -57,7 +67,7 @@ var coordinateConverter = {
   }
 };
 
-//Adds a list of coordinates to the firestore. Intended only for testing purposes.
+/*Adds a list of coordinates to the firestore. Intended only for testing purposes.
 function setCoordinates(list:any[]):void {
   list.forEach(coord =>
 	db.collection("testdata").add(coord)
@@ -80,10 +90,10 @@ async function getCoordinates(){
   return data;
 }
 */
-export function firebaseHandler() {
-	return [
+export async function firebaseHandler() {
+/*	return [
 		{ lat: 59.3345, long: 18.0723 },
 		{ lat: 59.3346, long: 18.0722 }
-	]
-	//return await getCoordinates();
+	]*/
+	return await getCoordinates();
 }
