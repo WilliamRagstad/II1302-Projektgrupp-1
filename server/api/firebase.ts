@@ -13,7 +13,7 @@ const serviceAccountKey = {
 	"token_uri": "https://oauth2.googleapis.com/token",
 	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
 	"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-z01bv%40airdash-eb4f7.iam.gserviceaccount.com"
-};/*
+};
 const client = await getFirebaseClient(serviceAccountKey);
 class Coordinate {
   lat:number;
@@ -38,7 +38,7 @@ console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
 		stringValue: "Hello!"
 	}
 }));
-
+*/
 console.log(await client.Storage.Metadata('mac-1/cat.jpg'))
 
 export async function getCoordinates(){
@@ -50,7 +50,7 @@ export async function getCoordinates(){
 	return await HEATMAP_DATA
 }
 console.log(await getCoordinates());
-*/
+
 
 /*
 //Converts Coordinate from JSON to an object and back.
@@ -89,10 +89,10 @@ async function getCoordinates(){
   return data;
 }
 */
-export function firebaseHandler() {
-return [
+export async function firebaseHandler() {
+/*	return [
 		{ lat: 59.3345, long: 18.0723 },
 		{ lat: 59.3346, long: 18.0722 }
-	]
-	//return await getCoordinates();
+	]*/
+	return await getCoordinates();
 }
