@@ -73,7 +73,7 @@ class FirebaseClient {
 		 */
 		Request: async (path: string, method: string, body?: Record<string, unknown>): Promise<any> => {
 			const options: RequestInit = { method };
-			if (typeof body !== "undefined") options.body = JSON.stringify(body);
+			if (body != undefined) options.body = JSON.stringify(body);
 			const res = await fetch(`${this.firestore}${path}`, options);
 			return await res.json();
 		},
@@ -82,7 +82,7 @@ class FirebaseClient {
 		 * @param path Path to resource.
 		 * @returns The result of the request.
 		 */
-		GetPath: (path: string) => this.Firestore.Request("documents/" + path, 'GET'),
+		GetPath: (path: string, count = 20, pageToken?: string) => this.Firestore.Request(`documents/${path}?pageSize=${count}${pageToken == undefined ? '' : `&pageToken=${pageToken}`}`, 'GET', undefined),
 		/**
 		 * Updated fields in a document.
 		 * @param docPath The document path.
