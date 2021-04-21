@@ -50,7 +50,6 @@ export async function getCoordinates(){
 	return await HEATMAP_DATA
 }
 console.log(await getCoordinates());
-console.log(await client.Firestore.GetDocuments("Test"));
 
 
 /*
