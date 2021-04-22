@@ -3,6 +3,12 @@ body {
 	font-family: system-ui;
 }
 
+html,
+body {
+	height: 100%;
+	margin: 0;
+}
+
 .background {
 	z-index: -2;
 }
@@ -171,8 +177,6 @@ h2 a:active {
 	margin: 10px;
 }
 
-html,
-body {
-	height: 100%;
-	margin: 0;
+input[type="text"] {
+	margin: 0 8px;
 }
