@@ -29,3 +29,16 @@ function createHeatmap(data) {
         };
     });
 }
+async function SearchLocation() {
+    const query = window.document.getElementById('search-text').value;
+    const result = await API.Get('/geosearch?query=' + query);
+    if (result.data) {
+        console.log(result.data);
+        const first = result.data[0];
+        if (first) {
+            map.setCenter(new window.google.maps.LatLng(first.latitude, first.longitude));
+            return;
+        }
+    }
+    alert("Could not find location!");
+}

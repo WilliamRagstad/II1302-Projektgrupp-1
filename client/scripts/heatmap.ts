@@ -7,7 +7,7 @@ declare global {
 	}
 }
 
-let map;
+let map: any;
 
 export async function initMap() {
 	const stockholm = new window.google.maps.LatLng(59.3293235, 18.0685808);
@@ -35,4 +35,18 @@ function createHeatmap(data: any[]): any[] {
 			weight: 0.1 as number
 		}
 	})
+}
+
+export async function SearchLocation() {
+	const query = window.document.getElementById('search-text').value;
+	const result = await API.Get('/geosearch?query=' + query);
+	if (result.data) {
+		console.log(result.data);
+		const first = result.data[0];
+		if (first) {
+			map.setCenter(new window.google.maps.LatLng(first.latitude, first.longitude));
+			return;
+		}
+	}
+	alert("Could not find location!");
 }

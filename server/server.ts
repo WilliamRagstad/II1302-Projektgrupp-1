@@ -1,6 +1,7 @@
 import { Application } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { firebaseHandler } from './api/firebase.ts';
+import { searchGeoHandler } from "./api/geosearch.ts";
 
 const { args } = Deno;
 const DEFAULT_PORT = 8000;
@@ -25,4 +26,5 @@ app
 		return "Hello World";
 	})
 	.get("/data", firebaseHandler)
+	.get("/geosearch", searchGeoHandler)
 	.start({ port: HOST_PORT });
