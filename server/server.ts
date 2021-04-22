@@ -20,6 +20,7 @@ app
 	.file("/contact", "client/pages/contact.html")
 	.file("/heatmap", "client/pages/heatmap.html")
 	.file("/recordings", "client/pages/recordings.html")
+	.file("/:404", "client/pages/index.html")
 	.get("/hello", () => {
 		return "Hello World";
 	})
