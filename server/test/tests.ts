@@ -48,6 +48,12 @@ Deno.test("Firestore Client Get Test", async () => {
   assertEquals(rawData.documents[0].fields.sampleData.stringValue, "Hello!");
 });
 
+//Tests the SerializeURI function.
+Deno.test("Firestorage Client SerializeURI Test", async () => {
+  var path = client.Storage.SerializeURI('mac-1/cat.jpg');
+  assertEquals(path, "mac-1%2Fcat.jpg");
+});
+
 //Tests the Firebase Storage Get Metadata function by retrieving the metadata of an test object and comparing its name.
 Deno.test("Firestorage Client Get Metadata Test", async () => {
   var rawData = await client.Storage.Metadata('mac-1/cat.jpg');
