@@ -105,6 +105,14 @@ h2 a:active {
 	text-decoration: none;
 }
 
+a {
+	transition: opacity .1s;
+}
+
+a:hover {
+	opacity: 0.7;
+}
+
 .main-content {
 	padding: 10px;
 	background: #ECF0FF;
