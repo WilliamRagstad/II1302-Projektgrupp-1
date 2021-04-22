@@ -52,6 +52,9 @@ span{
   color: #3A3A3A;
 }
 
+ul {
+    list-style-type: none;
+}
 .nav-buttons{
   margin-bottom: 20px;
   display: flex;
