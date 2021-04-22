@@ -140,6 +140,7 @@ h2 a, h1 a, h2 a:hover, h1 a:hover, h2 a:visited, h2 a:visited, h2 a:active, h2 
   -webkit-transition: .2s;
   transition: opacity .2s;
   border-radius: 30px;
+  padding: 0 5px;
 }
 
 .time-slider:hover {
