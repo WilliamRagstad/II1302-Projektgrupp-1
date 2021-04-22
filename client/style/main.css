@@ -83,7 +83,6 @@ h2 a, h1 a, h2 a:hover, h1 a:hover, h2 a:visited, h2 a:visited, h2 a:active, h2 
 }
 
 .main-content{
-  height: 70%;
   padding: 10px;
   background: #ECF0FF;
   mix-blend-mode: normal;
@@ -148,7 +147,7 @@ h2 a, h1 a, h2 a:hover, h1 a:hover, h2 a:visited, h2 a:visited, h2 a:active, h2 
 }
 
 #map {
-  height: 95%;
+  height: 50vw;
   margin: 10px;
 }
 
