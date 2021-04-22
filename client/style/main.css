@@ -148,6 +148,7 @@ h2 a, h1 a, h2 a:hover, h1 a:hover, h2 a:visited, h2 a:visited, h2 a:active, h2 
 
 #map {
   height: 50vw;
+  max-height: 500px;
   margin: 10px;
 }
 
