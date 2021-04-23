@@ -20,7 +20,7 @@ app
 	.static("/style/", "client/style")
 	.static("/assets/", "client/assets")
 	.file("/", "client/pages/index.html")
-	.file("/about", "client/pages/contact.html")
+	.file("/about", "client/pages/about.html")
 	.file("/heatmap", "client/pages/heatmap.html")
 	.file("/recordings", "client/pages/recordings.html")
 	.file("/:404", "client/pages/index.html")
