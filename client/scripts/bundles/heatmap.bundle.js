@@ -30,7 +30,10 @@ function createHeatmap(data) {
     });
 }
 async function SearchLocation() {
-    const query = window.document.getElementById('search-text').value;
+    var query = window.document.getElementById('search-text').value;
+    if (query == "") {
+        query = "Gamla Stan";
+    }
     const result = await API.Get('/geosearch?query=' + query);
     if (result.data) {
         const first = result.data[0];
