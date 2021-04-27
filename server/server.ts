@@ -27,5 +27,5 @@ app
 	.get("/data", firebaseHandler)
 	.post("/info", infoHandler)
 	.get("/geo", searchGeoHandler)
-	.get("/video", videoHandler)
+	.post("/video", videoHandler)
 	.start({ port: HOST_PORT });

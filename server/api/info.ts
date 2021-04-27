@@ -10,31 +10,38 @@
  *
  * ****************************************************************************************************
 */
+
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { uploadCoordinates, Coordinate } from "./firebase.ts";
-
-class ErrorHandler extends Error{
-  status:number;
-  constructor(message: string, status: number) {
-    super(message);
-    this.status = status;
-  }
-}
+import { ErrorHandler } from '../lib/errorHandler.ts';
+import { Codec } from '../lib/codec.ts';
 
 export const infoHandler: HandlerFunc = async (c: Context) => {
-	try {
-		let data: Coordinate;
+	// console.log(c);
+	const request = await c.body;
+	const content = typeof request == 'object' ? JSON.stringify(request) : '' + request;
+	console.log(`Request Body (${typeof request}): ${content}`);
+
+	const data = Codec.Info(content);
+	if (data.Succeeded) {
+		console.log('Parsed', data.Result);
+
 		try {
-			const body: any = await c.body;
-			data = {
-				lat: body.lat,
-				long: body.long
-			}
+			await uploadCoordinates(data.Result.GPS);
+			return "OK\nParsed: " + JSON.stringify(data.Result);
 		} catch (error) {
-			throw new ErrorHandler("Request body can not be empty!", 400);
+			throw new ErrorHandler(error.message, error.status || 500);
 		}
-		await uploadCoordinates(data);
-	} catch (error) {
-		throw new ErrorHandler(error.message, error.status || 500)
 	}
+	else throw new ErrorHandler(data.ErrorMessage, 400);
 }
+
+/*******************************
+ *
+ *  Test by sending a sample request to: http://localhost:8000/info
+ *  With the text body: 3E0C2CA38FB4{ÈA#-31.212,5.6752
+ *
+ *  The response should be the following object:
+ *  { Succeeded: true, Result: { MAC: "3E0C2CA38FB4", Data: "_*@^a1<+?3" } }
+ *
+ *******************************/
