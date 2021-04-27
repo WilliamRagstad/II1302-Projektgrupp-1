@@ -37,13 +37,20 @@ console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
 // console.log(client.Storage.GetLink('mac-1/cat.jpg'));
 
 
-interface Coordinate {
+export interface Coordinate {
 	lat: number;
 	long: number;
 }
 //Uploads JSON data to firestore
-export async function uploadCoordinates(data:any){
-	console.log(await client.Firestore.CreateDocument('testhttp	', '', data));
+export async function uploadCoordinates(data: Coordinate) {
+	console.log(await client.Firestore.CreateDocument('testhttp	', '', {
+		lat: {
+			doubleValue: data.lat
+		},
+		long: {
+			doubleValue: data.long
+		}
+	}));
 }
 
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
