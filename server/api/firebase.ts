@@ -1,6 +1,4 @@
 import { getFirebaseClient } from '../lib/firebaseWrapper.ts';
-import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
-import { ErrorHandler } from "../lib/middleware.ts"
 
 //! Must be kept secret!
 // https://console.firebase.google.com/u/1/project/airdash-eb4f7/settings/serviceaccounts/adminsdk Generated private key

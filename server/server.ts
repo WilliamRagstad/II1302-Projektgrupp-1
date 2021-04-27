@@ -4,7 +4,6 @@ import { firebaseHandler } from './api/firebase.ts';
 import { searchGeoHandler } from "./api/geosearch.ts";
 import { videoHandler } from "./api/video.ts";
 import { infoHandler } from "./api/info.ts";
-import { ErrorMiddleware, LogMiddleware } from "./lib/middleware.ts";
 
 const { args } = Deno;
 const DEFAULT_PORT = 8000;

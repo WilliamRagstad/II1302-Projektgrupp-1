@@ -10,9 +10,16 @@
  *
  * ****************************************************************************************************
 */
-import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
-import { ErrorHandler } from "../lib/middleware.ts";
+import { MiddlewareFunc, HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { uploadCoordinates, Coordinate } from "./firebase.ts";
+
+class ErrorHandler extends Error{
+  status:number;
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
 
 export const infoHandler: HandlerFunc = async (c: Context) => {
 	try {
