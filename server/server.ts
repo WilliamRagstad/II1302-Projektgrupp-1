@@ -28,7 +28,7 @@ app
 		return "Hello World";
 	})
 	.get("/data", firebaseHandler)
-	.post("/postcoordinate", firebasePostHandler)
+	.post("/info", firebasePostHandler)
 	.get("/geosearch", searchGeoHandler)
 	.get("/video", videoHandler)
 	.get("/info", infoHandler)
