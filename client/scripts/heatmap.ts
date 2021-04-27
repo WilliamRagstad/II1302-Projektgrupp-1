@@ -39,8 +39,8 @@ function createHeatmap(data: any[]): any[] {
 
 export async function SearchLocation() {
 	var query = window.document.getElementById('search-text').value;
-	if(query==""){query = "Gamla Stan";}
-	const result = await API.Get('/geosearch?query=' + query);
+	if (query == "") { query = "Gamla Stan"; }
+	const result = await API.Get('/geo?query=' + query);
 	if (result.data) {
 		// console.log(result.data);
 		const first = result.data[0];

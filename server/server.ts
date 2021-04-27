@@ -27,6 +27,6 @@ app
 	.file("/:404", "client/pages/index.html")
 	.get("/data", firebaseHandler)
 	.post("/info", infoHandler)
-	.get("/geosearch", searchGeoHandler)
+	.get("/geo", searchGeoHandler)
 	.get("/video", videoHandler)
 	.start({ port: HOST_PORT });
