@@ -10,7 +10,7 @@
  *
  * ****************************************************************************************************
 */
-import { MiddlewareFunc, HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { uploadCoordinates, Coordinate } from "./firebase.ts";
 
 class ErrorHandler extends Error{
