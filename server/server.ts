@@ -1,9 +1,10 @@
 import { Application } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { parse } from 'https://deno.land/std/flags/mod.ts';
-import { firebaseHandler, firebasePostHandler } from './api/firebase.ts';
+import { firebaseHandler } from './api/firebase.ts';
 import { searchGeoHandler } from "./api/geosearch.ts";
 import { videoHandler } from "./api/video.ts";
 import { infoHandler } from "./api/info.ts";
+import { ErrorMiddleware, LogMiddleware } from "./lib/middleware.ts";
 
 const { args } = Deno;
 const DEFAULT_PORT = 8000;
@@ -28,8 +29,7 @@ app
 		return "Hello World";
 	})
 	.get("/data", firebaseHandler)
-	.post("/info", firebasePostHandler)
+	.post("/info", infoHandler)
 	.get("/geosearch", searchGeoHandler)
 	.get("/video", videoHandler)
-	.get("/info", infoHandler)
 	.start({ port: HOST_PORT });

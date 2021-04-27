@@ -1,5 +1,6 @@
 import { getFirebaseClient } from '../lib/firebaseWrapper.ts';
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+import { ErrorHandler } from "../lib/middleware.ts"
 
 //! Must be kept secret!
 // https://console.firebase.google.com/u/1/project/airdash-eb4f7/settings/serviceaccounts/adminsdk Generated private key
@@ -40,6 +41,10 @@ interface Coordinate {
 	lat: number;
 	long: number;
 }
+//Uploads JSON data to firestore
+export async function uploadCoordinates(data:any){
+	console.log(await client.Firestore.CreateDocument('testhttp	', '', data));
+}
 
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	const rawData = await client.Firestore.GetPath('testdata', maxCount);
@@ -49,17 +54,4 @@ async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 
 export async function firebaseHandler() {
 	return await getCoordinates(1000);
-}
-
-//Requires JSON formated coordinate with lat and long.
-export const firebasePostHandler: HandlerFunc = async (c: Context) => {
-	const body:any = await (c.body);
-	console.log(await client.Firestore.CreateDocument('testhttp	', '', {
-		lat: {
-			doubleValue: body.lat
-		},
-		long: {
-			doubleValue: body.long
-		}
-	}));
 }

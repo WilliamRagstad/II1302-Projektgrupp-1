@@ -10,9 +10,27 @@
  *
  * ****************************************************************************************************
 */
+import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+import { ErrorHandler } from "../lib/middleware.ts";
+import { uploadCoordinates } from "./firebase.ts";
 
-export async function infoHandler(data: any) {
-	console.log(data.url)
-
-	return await "Ok";
+export const infoHandler: HandlerFunc = async (c: Context) => {
+	try {
+    try{
+      const body:any = await (c.body);
+      var data = {
+        lat: {
+          doubleValue: body.lat
+        },
+        long: {
+          doubleValue: body.long
+        }
+      }
+    } catch(error){
+      throw new ErrorHandler("Request body can not be empty!", 400);
+    }
+    await uploadCoordinates(data);
+	} catch(error) {
+		throw new ErrorHandler(error.message, error.status || 500)
+	}
 }
