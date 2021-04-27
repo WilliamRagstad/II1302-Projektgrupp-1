@@ -34,7 +34,7 @@ async function SearchLocation() {
     if (query == "") {
         query = "Gamla Stan";
     }
-    const result = await API.Get('/geosearch?query=' + query);
+    const result = await API.Get('/geo?query=' + query);
     if (result.data) {
         const first = result.data[0];
         if (first) {

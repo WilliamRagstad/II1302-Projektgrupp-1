@@ -24,11 +24,8 @@ app
 	.file("/heatmap", "client/pages/heatmap.html")
 	.file("/recordings", "client/pages/recordings.html")
 	.file("/:404", "client/pages/index.html")
-	.get("/hello", () => {
-		return "Hello World";
-	})
 	.get("/data", firebaseHandler)
 	.post("/info", infoHandler)
-	.get("/geosearch", searchGeoHandler)
+	.get("/geo", searchGeoHandler)
 	.get("/video", videoHandler)
 	.start({ port: HOST_PORT });
