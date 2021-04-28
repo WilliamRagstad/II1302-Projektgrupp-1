@@ -1,4 +1,5 @@
 import { getFirebaseClient } from '../lib/firebaseWrapper.ts';
+import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 
 //! Must be kept secret!
 // https://console.firebase.google.com/u/1/project/airdash-eb4f7/settings/serviceaccounts/adminsdk Generated private key
@@ -57,6 +58,15 @@ async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	return rawData.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
 }
 
-export async function firebaseHandler() {
+export async function heatmapHandler() {
 	return await getCoordinates(1000);
+}
+
+export function heatmapByTimeHandler(c: Context) {
+	console.log(c);
+	const { from, to } = c.params as { from: string, to: string }
+	console.log(from, to);
+
+
+	return "test";
 }
