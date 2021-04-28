@@ -12,7 +12,7 @@
 */
 
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
-import { uploadCoordinates, Coordinate } from "./firebase.ts";
+import { uploadCoordinates, Coordinate } from "./heatmap.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec } from '../lib/codec.ts';
 
