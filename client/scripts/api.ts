@@ -1,7 +1,10 @@
 export const API = {
-	Get: async function(endpoint: string) {
+	Get: async function (endpoint: string) {
 		const response = await fetch(endpoint.startsWith('/') ? endpoint : `/${endpoint}`);
-		const data = await response.json();
-		return data;
+		try {
+			return await response.json();
+		} catch (error) {
+			return await response.text();
+		}
 	}
 }
