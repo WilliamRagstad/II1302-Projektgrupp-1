@@ -8,6 +8,7 @@ declare global {
 }
 
 let map: any;
+let heatmap: any;
 
 export async function initMap() {
 	const stockholm = new window.google.maps.LatLng(59.3293235, 18.0685808);
@@ -19,7 +20,7 @@ export async function initMap() {
 
 	const HEATMAP_DATA = await API.Get('/data'); //Awaits the promise before continuing and adding the data.
 	if (HEATMAP_DATA != null) {
-		const heatmap = new window.google.maps.visualization.HeatmapLayer({
+		heatmap = new window.google.maps.visualization.HeatmapLayer({
 			data: createHeatmap(HEATMAP_DATA)
 		});
 		heatmap.setMap(map);
@@ -53,3 +54,18 @@ export async function SearchLocation() {
 }
 
 window.document.getElementById('search-text').addEventListener('keydown', (e: any) => e.key == 'Enter' && SearchLocation());
+
+export async function SearchDate() {
+	var fromdate = new Date(window.document.getElementById('from').value);
+	var todate = new Date(window.document.getElementById('to').value);
+	if (fromdate == null || todate == null) { alert("Need input in both date pickers"); return;}
+	if (fromdate > todate) { alert("invalid dates")}
+	const result = await API.Get('/data/' + fromdate + '/' + todate);
+	if (result != null) {
+		heatmap.setData(createHeatmap(result));
+		return;
+	}
+	alert("Could not find any heatmapdata!");
+}
+
+

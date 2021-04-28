@@ -62,11 +62,11 @@ export async function heatmapHandler() {
 	return await getCoordinates(1000);
 }
 
-export function heatmapByTimeHandler(c: Context) {
-	console.log(c);
+export async function heatmapByTimeHandler(c: Context) {
 	const { from, to } = c.params as { from: string, to: string }
-	console.log(from, to);
+	const fromdate = new Date(from);
+	const todate = new Date(to);
+	console.log(fromdate, todate);
 
-
-	return "test";
+	return await getCoordinates(10);
 }
