@@ -1,8 +1,11 @@
 const API = {
     Get: async function(endpoint) {
         const response = await fetch(endpoint.startsWith('/') ? endpoint : `/${endpoint}`);
-        const data = await response.json();
-        return data;
+        try {
+            return await response.json();
+        } catch (error) {
+            return await response.text();
+        }
     }
 };
 let map;
@@ -48,19 +51,27 @@ async function SearchLocation() {
 window.document.getElementById('search-text').addEventListener('keydown', (e)=>e.key == 'Enter' && SearchLocation()
 );
 async function SearchDate() {
-    var fromdate = new Date(window.document.getElementById('from').value);
-    var todate = new Date(window.document.getElementById('to').value);
-    if (fromdate == null || todate == null) {
+    if (window.document.getElementById('from').value == "" || window.document.getElementById('to').value == "") {
         alert("Need input in both date pickers");
         return;
     }
+    var fromdate = new Date(window.document.getElementById('from').value);
+    var todate = new Date(window.document.getElementById('to').value);
     if (fromdate > todate) {
         alert("invalid dates");
+        return;
     }
-    const result = await API.Get('/data/' + fromdate + '/' + todate);
+    const path = '/data/' + formatDate(fromdate) + '/' + formatDate(todate);
+    const result = await API.Get(path);
     if (result != null) {
         heatmap.setData(createHeatmap(result));
         return;
     }
     alert("Could not find any heatmapdata!");
+}
+function formatDate(date) {
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0');
+    var yyyy = date.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
 }

@@ -56,11 +56,12 @@ export async function SearchLocation() {
 window.document.getElementById('search-text').addEventListener('keydown', (e: any) => e.key == 'Enter' && SearchLocation());
 
 export async function SearchDate() {
+	if (window.document.getElementById('from').value == "" || window.document.getElementById('to').value == "") { alert("Need input in both date pickers"); return;}
 	var fromdate = new Date(window.document.getElementById('from').value);
 	var todate = new Date(window.document.getElementById('to').value);
-	if (fromdate == null || todate == null) { alert("Need input in both date pickers"); return;}
-	if (fromdate > todate) { alert("invalid dates")}
-	const result = await API.Get('/data/' + fromdate + '/' + todate);
+	if (fromdate > todate) { alert("invalid dates"); return;}
+	const path = '/data/' + formatDate(fromdate) + '/' + formatDate(todate);
+	const result = await API.Get(path);
 	if (result != null) {
 		heatmap.setData(createHeatmap(result));
 		return;
@@ -68,4 +69,10 @@ export async function SearchDate() {
 	alert("Could not find any heatmapdata!");
 }
 
+function formatDate(date: Date) {
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    return  yyyy + '-' + mm + '-' + dd;
+}
 

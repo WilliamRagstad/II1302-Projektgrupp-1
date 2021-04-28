@@ -66,6 +66,7 @@ export async function heatmapByTimeHandler(c: Context) {
 	const { from, to } = c.params as { from: string, to: string }
 	const fromdate = new Date(from);
 	const todate = new Date(to);
+	console.log(from, to);
 	console.log(fromdate, todate);
 
 	return await getCoordinates(10);
