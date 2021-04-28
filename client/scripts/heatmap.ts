@@ -17,7 +17,7 @@ export async function initMap() {
 		mapTypeId: 'satellite'
 	});
 
-	const HEATMAP_DATA = await API.Get('/heatmap'); //Awaits the promise before continuing and adding the data.
+	const HEATMAP_DATA = await API.Get('/data'); //Awaits the promise before continuing and adding the data.
 	if (HEATMAP_DATA != null) {
 		const heatmap = new window.google.maps.visualization.HeatmapLayer({
 			data: createHeatmap(HEATMAP_DATA)
