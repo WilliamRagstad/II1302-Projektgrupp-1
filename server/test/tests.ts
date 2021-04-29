@@ -115,7 +115,7 @@ Deno.test({
 
 //Testing /info with correct format.
 Deno.test({
-  name: "API Endpoint POST Success",
+  name: "API Endpoint POST /info Success",
   async fn() {
     const postRequest = await fetch("https://airdash.herokuapp.com/info", {
       method: "POST",
@@ -139,7 +139,7 @@ Deno.test({
 
 //Testing /info endpoint with empty format.
 Deno.test({
-  name: "API Endpoint POST Failure",
+  name: "API Endpoint POST /info Failure",
   async fn() {
     const postRequest = await fetch("https://airdash.herokuapp.com/info", {
       method: "POST",
@@ -156,7 +156,7 @@ Deno.test({
 
 //Testing /data endpoint.
 Deno.test({
-  name: "API Endpoint GET",
+  name: "API Endpoint GET /data",
   async fn() {
     const postRequest = await fetch("https://airdash.herokuapp.com/data", {
       method: "GET",
