@@ -1,2 +1,2 @@
 @echo off
-deno test --allow-net --allow-read server/test/tests.ts
+deno test --allow-net --allow-read server/test/index.ts
