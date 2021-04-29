@@ -24,6 +24,15 @@ import type { GoogleAuthToken, ServiceAccountKey } from "./types.ts";
  * Project ID
  * 	https://firebase.google.com/docs/projects/learn-more#project-id
  *
+ * Todo: ------------------------------------
+ * 	Make rules for both Firestore and Storage to
+ * 	require request.auth to be set to gain access
+ * 	to read and allow writes to Firebase.
+ *
+ * 	This is a serious security risk right now
+ * 	and should be fixed when/if shipped into
+ * 	production in the future.
+ *
 *******************************************/
 const FirestoreVersion = "v1";
 const StorageVersion = "v0";
@@ -86,6 +95,7 @@ class FirebaseClient {
 		GetPath: (path: string, count = 20, pageToken?: string) => this.Firestore.Request(`documents/${path}?pageSize=${count}${pageToken == undefined ? '' : `&pageToken=${pageToken}`}`, 'GET', undefined),
 		/**
 		 * Updated fields in a document.
+		 * TODO: Fix rule for only allowing uploads from authenticated clients by using the token.
 		 * @param docPath The document path.
 		 * @param updatedFields Optional fields to update. Values must follow this syntax specification: https://cloud.google.com/firestore/docs/reference/rest/v1beta1/Value.
 		 * @returns The updated document.
@@ -93,6 +103,7 @@ class FirebaseClient {
 		UpdateDocumentFields: (docPath: string, updatedFields: Record<string, unknown>) => this.Firestore.Request("documents/" + docPath, 'PATCH', { fields: updatedFields }),
 		/**
 		 * Created a new document in a specific collection.
+		 * TODO: Fix rule for only allowing uploads from authenticated clients by using the token.
 		 * @param collectionPath Collection path in which to create the document.
 		 * @param documentID Document ID.
 		 * @param fields Optional pre-filled fields for the document.
@@ -101,6 +112,7 @@ class FirebaseClient {
 		CreateDocument: (collectionPath: string, documentID?: string, fields?: Record<string, unknown>) => this.Firestore.Request(`documents/${collectionPath}${documentID == undefined ? '' : `?documentId=${documentID}`}`, 'POST', fields && { fields: fields }),
 		/**
 		 *  Deletes a specific document in a specific collection.
+		 * TODO: Fix rule for only allowing uploads from authenticated clients by using the token.
 		 *  @param path Collection path and document ID to find document.
 		 *  @returns {}
 		 */
@@ -124,7 +136,7 @@ class FirebaseClient {
 		Download: (objectPath: string) => this.Storage.AbsoluteRequest(this.Storage.GetLink(objectPath), 'GET', undefined, undefined, false),
 		/**
 		 * Upload a file to Firebase Storage.
-		 * TODO: Fix rule for only allowing uploads from authenticated clients.
+		 * TODO: Fix rule for only allowing uploads from authenticated clients by using the token.
 		 * @param objectFolder Folder to upload object to
 		 * @param objectName Name of the object
 		 * @param objectData File data
