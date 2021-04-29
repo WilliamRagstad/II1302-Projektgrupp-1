@@ -10,7 +10,7 @@ Deno.test("Test test", () => {
 	assertEquals(x, 3);
 });
 
-//Tests firebaseHandler by comparing the first coordinate in the list.
+//Tests heatmapHandler by comparing the first coordinate in the list.
 Deno.test("Test Coordinate Retrieval", async () => {
 	const HEATMAP_DATA = await heatmapHandler();
 	assertEquals(HEATMAP_DATA[0],
@@ -49,7 +49,7 @@ Deno.test("Firestore Client Get Test", async () => {
 });
 
 //Tests the SerializeURI function.
-Deno.test("Firestorage Client SerializeURI Test", async () => {
+Deno.test("Firestorage Client SerializeURI Test", () => {
 	var path = client.Storage.SerializeURI('mac-1/cat.jpg');
 	assertEquals(path, "mac-1%2Fcat.jpg");
 });
@@ -61,7 +61,21 @@ Deno.test("Firestorage Client Get Metadata Test", async () => {
 });
 
 //Tests the Firebase Storage Get URL with the same test object.
-Deno.test("Firestorage Client Get URL Test", async () => {
+Deno.test("Firestorage Client Get URL Test", () => {
 	var url = client.Storage.GetLink('mac-1/cat.jpg');
 	assertEquals(url, "https://firebasestorage.googleapis.com/v0/b/airdash-eb4f7.appspot.com/o/mac-1%2Fcat.jpg?alt=media");
+});
+
+//Tests the Firebase CreateDocument function
+Deno.test("Firestore CreateDocument", async ()=>{
+	var response = await client.Firestore.CreateDocument('CreateDocumentTest', '', {
+		lat: {
+			doubleValue: 15.5
+		},
+		long: {
+			doubleValue: 13.5
+		}
+	});
+	assertEquals(response.fields.lat.doubleValue, 15.5);
+	assertEquals(response.fields.long.doubleValue, 13.5);
 });
