@@ -26,7 +26,7 @@ app
 	.file("/:404", "client/pages/index.html")
 	.get("/data", heatmapHandler)
 	.get("/data/:from/:to", heatmapByTimeHandler)
-	.post("/info", infoHandler)
 	.get("/geo", searchGeoHandler)
+	.post("/info", infoHandler)
 	.post("/video", videoHandler)
 	.start({ port: HOST_PORT });
