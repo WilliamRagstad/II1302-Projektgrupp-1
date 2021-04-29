@@ -13,6 +13,7 @@ import type { GoogleAuthToken, ServiceAccountKey } from "./types.ts";
  * Storage:
  * 	https://cloud.google.com/filestore/docs/reference/rest
  * 	https://cloud.google.com/storage/docs/json_api/v1
+ * 	https://cloud.google.com/storage/docs/json_api/
  * 	https://firebase.google.com/docs/reference/rest/storage/rest
  *
  * REST Reference
