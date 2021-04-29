@@ -38,7 +38,7 @@ export const infoHandler: HandlerFunc = async (c: Context) => {
 
 /*******************************
  *
- *  Test by sending a sample request to: http://localhost:8000/info
+ *  Test by sending a sample POST request to: http://localhost:8000/info
  *  With the text body: 3E0C2CA38FB4{ÈA#-31.212,5.6752
  *
  *  The response should be the following object:
