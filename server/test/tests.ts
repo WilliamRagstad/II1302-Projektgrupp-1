@@ -68,7 +68,7 @@ Deno.test("Firestorage Client Get URL Test", () => {
 
 //Tests the Firebase CreateDocument function
 Deno.test("Firestore CreateDocument", async ()=>{
-	var response = await client.Firestore.CreateDocument('CreateDocumentTest', '', {
+	var response = await client.Firestore.CreateDocument('CreateDocumentTest', 'test', {
 		lat: {
 			doubleValue: 15.5
 		},
@@ -76,6 +76,50 @@ Deno.test("Firestore CreateDocument", async ()=>{
 			doubleValue: 13.5
 		}
 	});
+
 	assertEquals(response.fields.lat.doubleValue, 15.5);
 	assertEquals(response.fields.long.doubleValue, 13.5);
+	var del = await client.Firestore.DeleteDocument('CreateDocumentTest/test');
+	assertEquals(del, {});
+});
+
+//Testing /info with correct format
+Deno.test({
+	name: "API Endpoint POST Success",
+	async fn(){
+		const postRequest = await fetch('https://airdash.herokuapp.com/info', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				lat: {
+					doubleValue: 59.297
+				},
+				long: {
+					doubleValue: 18.005
+				}
+			}),
+		});
+		assertEquals(postRequest.status, 200);
+	},
+	sanitizeResources: false,
+	sanitizeOps: false
+});
+
+//Testing /info endpoint with empty format
+Deno.test({
+	name: "API Endpoint POST Failure",
+	async fn(){
+		const postRequest = await fetch('https://airdash.herokuapp.com/info', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({}),
+		});
+		assertEquals(postRequest.status, 500);
+	},
+	sanitizeResources: false,
+	sanitizeOps: false
 });

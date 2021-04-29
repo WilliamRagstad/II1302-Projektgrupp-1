@@ -20,6 +20,6 @@ export async function searchGeoHandler(data: any) {
 	const query = parseQueryString(data.url.search);
 	const search = query.find(q => q.name === 'query');
 	if (search == undefined) return `ERROR: No query provided!
-Expected /geosearch?query=<Search text>`;
+Expected /geo?query=<Search text>`;
 	return await GEOLocation.Search(search.value);
 }
