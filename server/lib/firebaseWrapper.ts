@@ -108,17 +108,22 @@ class FirebaseClient {
 	}
 
 	public Storage = {
-		Request: async (path: string, method: string, body?: Record<string, unknown>, toJSON: boolean = true): Promise<any> => {
+		Request: (path: string, method: string, body?: BodyInit, headers?: HeadersInit, toJSON = true): Promise<any> => this.Storage.AbsoluteRequest(this.storage + path, method, body, headers, toJSON),
+		AbsoluteRequest: async (path: string, method: string, body?: BodyInit, headers?: HeadersInit, toJSON = true): Promise<any> => {
 			const options: RequestInit = { method };
-			if (typeof body !== "undefined") options.body = JSON.stringify(body);
-			console.log("Sending request to: " + `${this.storage}${path}`)
-			const res = await fetch(`${this.storage}${path}`, options);
+			if (headers) options.headers = headers
+			if (body) options.body = body;
+			console.log(`Sending request to: ${this.storage}${path} with: ${JSON.stringify(options)}`)
+			const res = await fetch(path, options);
 			return toJSON ? await res.json() : res;
 		},
 		SerializeURI: (uri: string) => uri.replaceAll('/', '%2F'),
 		Metadata: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}`, 'GET'),
 		GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
-		Download: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}?alt=media`, 'GET', undefined, false)
+		Download: (objectPath: string) => this.Storage.AbsoluteRequest(this.Storage.GetLink(objectPath), 'GET', undefined, undefined, false),
+		Upload: (objectFolder: string, objectName: string, objectData: any, dataMIME = 'text/plain') => this.Storage.Request(`o/${this.Storage.SerializeURI(objectFolder + '/' + objectName)}`, 'POST', objectData, {
+			'Content-Type': dataMIME
+		} as HeadersInit)
 	}
 }
 
