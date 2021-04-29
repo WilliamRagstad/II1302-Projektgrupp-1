@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     for(p = res; p != NULL; p = p->ai_next)
     {
         void *addr;
-        char *ipvar;
+        char *ipver;
 
         //get the pointer to the address itself
         //different fields in ipv4 and ipv6
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
         }
 
         //cinvert the IP to a string and print it:
-        inet_ntop(p->ai_family, addr, ,ipstr, sizeof ipstr);
+        inet_ntop(p->ai_family, addr, ipstr, sizeof ipstr);
         printf(" %s: %s\n", ipver, ipstr);
     }
 
