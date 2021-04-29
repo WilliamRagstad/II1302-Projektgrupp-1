@@ -153,3 +153,19 @@ Deno.test({
   sanitizeResources: false,
   sanitizeOps: false,
 });
+
+//Testing /data endpoint.
+Deno.test({
+  name: "API Endpoint GET",
+  async fn() {
+    const postRequest = await fetch("https://airdash.herokuapp.com/data", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+		assertEquals(postRequest.status, 200);
+  },
+  sanitizeResources: false,
+  sanitizeOps: false,
+});
