@@ -6,6 +6,7 @@
 //#include <Viktor.h>
 //#include <Basel.h>
 
+//inte egen kod utan lånad för att lära sig mmap
 long foo(void) {
 	int fdgpio=open("/dev/gpiomem", O_RDWR);
 	if(fdgpio<0) {
