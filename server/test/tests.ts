@@ -65,3 +65,17 @@ Deno.test("Firestorage Client Get URL Test", () => {
 	var url = client.Storage.GetLink('mac-1/cat.jpg');
 	assertEquals(url, "https://firebasestorage.googleapis.com/v0/b/airdash-eb4f7.appspot.com/o/mac-1%2Fcat.jpg?alt=media");
 });
+
+//Tests the Firebase CreateDocument function
+Deno.test("Firestore CreateDocument", async ()=>{
+	var response = await client.Firestore.CreateDocument('CreateDocumentTest', '', {
+		lat: {
+			doubleValue: 15.5
+		},
+		long: {
+			doubleValue: 13.5
+		}
+	});
+	assertEquals(response.fields.lat.doubleValue, 15.5);
+	assertEquals(response.fields.long.doubleValue, 13.5);
+});
