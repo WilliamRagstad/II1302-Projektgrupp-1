@@ -1,6 +1,7 @@
 const API = {
     Get: async function(endpoint) {
         const response = await fetch(endpoint.startsWith('/') ? endpoint : `/${endpoint}`);
+        if (response.status !== 200) return false;
         try {
             return await response.json();
         } catch (error) {
@@ -61,7 +62,7 @@ async function SearchDate() {
         alert("invalid dates");
         return;
     }
-    const path = '/data/' + formatDate(fromdate) + '/' + formatDate(todate);
+    const path = '/data/' + fromdate.toLocaleDateString() + '/' + todate.toLocaleDateString();
     const result = await API.Get(path);
     if (result != null) {
         heatmap.setData(createHeatmap(result));
@@ -69,9 +70,5 @@ async function SearchDate() {
     }
     alert("Could not find any heatmapdata!");
 }
-function formatDate(date) {
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0');
-    var yyyy = date.getFullYear();
-    return yyyy + '-' + mm + '-' + dd;
-}
+window.document.getElementById('from').value = new Date().toLocaleDateString();
+window.document.getElementById('to').value = new Date().toLocaleDateString();

@@ -98,12 +98,12 @@ class FirebaseClient {
 		 * @returns The new document.
 		 */
 		CreateDocument: (collectionPath: string, documentID?: string, fields?: Record<string, unknown>) => this.Firestore.Request(`documents/${collectionPath}${documentID == undefined ? '' : `?documentId=${documentID}`}`, 'POST', fields && { fields: fields }),
-    /**
-     *  Deletes a specific document in a specific collection.
-     *  @param path Collection path and document ID to find document.
-     *  @returns {}
-     */
-    DeleteDocument: (path: string) => this.Firestore.Request(`documents/${path}`, 'DELETE', undefined),
+		/**
+		 *  Deletes a specific document in a specific collection.
+		 *  @param path Collection path and document ID to find document.
+		 *  @returns {}
+		 */
+		DeleteDocument: (path: string) => this.Firestore.Request(`documents/${path}`, 'DELETE', undefined),
 
 	}
 

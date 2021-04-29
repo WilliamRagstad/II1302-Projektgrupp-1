@@ -56,11 +56,11 @@ export async function SearchLocation() {
 window.document.getElementById('search-text').addEventListener('keydown', (e: any) => e.key == 'Enter' && SearchLocation());
 
 export async function SearchDate() {
-	if (window.document.getElementById('from').value == "" || window.document.getElementById('to').value == "") { alert("Need input in both date pickers"); return;}
+	if (window.document.getElementById('from').value == "" || window.document.getElementById('to').value == "") { alert("Need input in both date pickers"); return; }
 	var fromdate = new Date(window.document.getElementById('from').value);
 	var todate = new Date(window.document.getElementById('to').value);
-	if (fromdate > todate) { alert("invalid dates"); return;}
-	const path = '/data/' + formatDate(fromdate) + '/' + formatDate(todate);
+	if (fromdate > todate) { alert("invalid dates"); return; }
+	const path = '/data/' + fromdate.toLocaleDateString() + '/' + todate.toLocaleDateString();
 	const result = await API.Get(path);
 	if (result != null) {
 		heatmap.setData(createHeatmap(result));
@@ -69,10 +69,6 @@ export async function SearchDate() {
 	alert("Could not find any heatmapdata!");
 }
 
-function formatDate(date: Date) {
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = date.getFullYear();
-    return  yyyy + '-' + mm + '-' + dd;
-}
-
+// Default dates
+window.document.getElementById('from').value = new Date().toLocaleDateString();
+window.document.getElementById('to').value = new Date().toLocaleDateString()
