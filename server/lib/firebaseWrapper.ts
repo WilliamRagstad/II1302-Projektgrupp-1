@@ -121,6 +121,15 @@ class FirebaseClient {
 		Metadata: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}`, 'GET'),
 		GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
 		Download: (objectPath: string) => this.Storage.AbsoluteRequest(this.Storage.GetLink(objectPath), 'GET', undefined, undefined, false),
+		/**
+		 * Upload a file to Firebase Storage.
+		 * TODO: Fix rule for only allowing uploads from authenticated clients.
+		 * @param objectFolder Folder to upload object to
+		 * @param objectName Name of the object
+		 * @param objectData File data
+		 * @param dataMIME Data Mime type
+		 * @returns Info about the newly created object
+		 */
 		Upload: (objectFolder: string, objectName: string, objectData: any, dataMIME = 'text/plain') => this.Storage.Request(`o/${this.Storage.SerializeURI(objectFolder + '/' + objectName)}`, 'POST', objectData, {
 			'Content-Type': dataMIME
 		} as HeadersInit)
