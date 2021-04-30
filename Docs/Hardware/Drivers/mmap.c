@@ -6,6 +6,8 @@
 //#include <Viktor.h>
 //#include <Basel.h>
 
+
+
 //inte egen kod utan lånad för att lära sig mmap
 long foo(void) {
 	int fdgpio=open("/dev/gpiomem", O_RDWR);
@@ -17,30 +19,30 @@ long foo(void) {
 				MAP_SHARED,fdgpio,0);
 	printf("mmap'd gpiomem at pointer %p\n",gpio);
 	
-	return gpio[13]&(1<<8);
+	printf("GPLEV0 = %d\n", gpio[13]);
+	
+	printf("GPSET0 = %d\n", gpio[7]);
+
+	printf("GPCLR0 = %d\n", gpio[10]);
+
+	for (int i = 1; i<5; i++) {
+		printf("GPFSEL%d = %d\n",i, gpio[i]);
+	}
+return gpio[13]&(1<<8);
 }
 
 int main() {
 	
 	/*
 	programstruktur:
-	* start läser in värdena
+	* main.c tar funktions deklarationer från mmap.h, 
+	* acelerometer.h och gps.h
 	* 
-	* formaterar
-	* 
-	* etablerar en binding till servern
-	* 
-	* skickar videon
-	* 
-	* skickar resten datan
-	* 
-	* gör att videon nu skriver vidare tills den får slut på disk minne
-	* (i test fallet kör vi på en hel minuts lagring)
-	//*/
+//*/
 	
 	
 	
-	printf("\nmatiga funktionen ger oss: %ld", foo());
+	printf("\nfoo ger oss: %ld", foo());
 	
 	return 0;
 }
