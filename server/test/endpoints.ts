@@ -57,4 +57,17 @@ export function testEndpoints() {
 		sanitizeResources: false,
 		sanitizeOps: false,
 	});
+
+	//Testing /geo endpoint.
+	Deno.test({
+		name: "API Endpoint GET /geo",
+		async fn() {
+			const postRequest = await fetch("https://airdash.herokuapp.com/geo?query=vasastan", {
+				method: "GET",
+			});
+			assertEquals(postRequest.status, 200);
+		},
+		sanitizeResources: false,
+		sanitizeOps: false,
+	});
 }
