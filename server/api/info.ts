@@ -42,6 +42,6 @@ export const infoHandler: HandlerFunc = async (c: Context) => {
  *  With the text body: 3E0C2CA38FB4{ÈA#-31.212,5.6752
  *
  *  The response should be the following object:
- *  { Succeeded: true, Result: { MAC: "3E0C2CA38FB4", Data: "_*@^a1<+?3" } }
+ *  { Succeeded: true, Result: { MAC: "3E0C2CA38FB4", Accelerometer: 1949, GPS: { lat: -31.212, long: 5.6752}} }
  *
  *******************************/
