@@ -40,10 +40,12 @@ async function SearchLocation() {
         query = "Gamla Stan";
     }
     const result = await API.Get('/geo?query=' + query);
-    if (result.data) {
-        const first = result.data[0];
+    console.log(result);
+    if (result.candidates) {
+        console.log(result.candidates);
+        const first = result.candidates[0];
         if (first) {
-            map.setCenter(new window.google.maps.LatLng(first.latitude, first.longitude));
+            map.setCenter(new window.google.maps.LatLng(first.geometry.location.lat, first.geometry.location.lng));
             return;
         }
     }
