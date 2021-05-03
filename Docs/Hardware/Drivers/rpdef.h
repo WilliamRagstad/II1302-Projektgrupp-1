@@ -1,10 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <unistd.h>
-
-
 #define BCM2708_PERI_BASE 0x20000000
 #define GPIO_BASE (BCM2708_PERI_BASE + 0x200000)
 #define BLOCK_SIZE (4*1024)
@@ -18,9 +11,6 @@
 #define GPIO_READ(g) (*(gpio.addr+13)&(1<<g))
 #define GPIO_PULL *(gpio.addr+37)
 
-
-
-
 struct bcm2835_peripheral {
 	unsigned long addr_p;
 	int mem_fd;
@@ -29,10 +19,4 @@ struct bcm2835_peripheral {
 };
 
 
-
-int map_peripheral(struct bcm2835_peripheral *p);
-void unmap_peripheral(struct bcm2835_peripheral *p);
-
-
-struct bcm2835_peripheral gpio = {GPIO_BASE};
-extern struct bcm2835_peripheral gpio;
+//extern struct bcm2835_peripheral gpio;
