@@ -19,6 +19,8 @@
 #define GPIO_PULL *(gpio.addr+37)
 
 
+
+
 struct bcm2835_peripheral {
 	unsigned long addr_p;
 	int mem_fd;
@@ -28,9 +30,9 @@ struct bcm2835_peripheral {
 
 
 
+int map_peripheral(struct bcm2835_peripheral *p);
+void unmap_peripheral(struct bcm2835_peripheral *p);
+
 
 struct bcm2835_peripheral gpio = {GPIO_BASE};
 extern struct bcm2835_peripheral gpio;
-
-int map_peripheral(struct bcm2835_peripheral *p);
-void unmap_peripheral(struct bcm2835_peripheral *p);
