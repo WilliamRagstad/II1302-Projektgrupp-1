@@ -1,4 +1,5 @@
 /*
+   written by abyz.me.uk/rpi/pigpio/examples.thml#Misc_tiny_gpio
    tiny_gpio.c
    2016-04-30
    Public Domain
@@ -211,7 +212,7 @@ int gpioInitialise(void)
    return 0;
 }
 
-main()
+int main()
 {
    int i;
 
