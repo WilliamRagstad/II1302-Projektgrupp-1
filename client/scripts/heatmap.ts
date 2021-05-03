@@ -1,5 +1,18 @@
 import { API } from './api.ts';
 
+/*****************************************************************************************************
+ *
+ * 	Heatmap component to display the crash data.
+ *
+ * 	Read the Heatmap Protocol here:
+ *  https://docs.google.com/document/d/1SCksR1ZiXcY1JKih0xlanwZ_goSRLAft9CjBOXBbfL4/edit#
+ *
+ * 	Author: William Axbrink
+ * 	Created: 2021-05-03
+ *
+ * ****************************************************************************************************
+*/
+
 declare global {
 	interface Window {
 		document: any,

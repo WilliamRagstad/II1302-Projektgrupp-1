@@ -1,11 +1,11 @@
-import { testDeno } from "./deno.ts";
 import { testHeatmap } from "./heatmap.ts";
 import { testFirebase } from "./firebase.ts";
 import { testEndpoints } from "./endpoints.ts";
 import { testCodec } from "./codec.ts";
+import { testGui } from "./gui/index.ts";
 
-testDeno();
 testHeatmap();
 testFirebase();
 testEndpoints();
 testCodec();
+testGui();

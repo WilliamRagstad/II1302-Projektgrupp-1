@@ -40,6 +40,22 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 }
 
 
+export async function videoByIDHandler(c: Context) {
+	const { mac } = c.params as { mac: string }
+	return await getVideos(mac);
+}
+
+async function getVideos(mac:any) {
+	const rawData = await Firebase.Storage.List(mac);
+	var videoURL: any[] = [];
+	rawData.items.forEach(async (item:any) =>
+	videoURL.push(await Firebase.Storage.GetLink(item.name))
+	)
+
+	return await videoURL;
+}
+
+
 /*******************************
  *
  *  Test by sending a sample POST request to: http://localhost:8000/video

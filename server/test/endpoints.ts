@@ -58,11 +58,40 @@ export function testEndpoints() {
 		sanitizeOps: false,
 	});
 
+	//Testing /data endpoint with date inputs.
+	Deno.test({
+		name: "API Endpoint GET /data date inputs",
+		async fn() {
+			const postRequest = await fetch("https://airdash.herokuapp.com/data/2021-05-01/2021-05-05", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				}
+			});
+			assertEquals(postRequest.status, 200);
+		},
+		sanitizeResources: false,
+		sanitizeOps: false,
+	});
+
 	//Testing /geo endpoint.
 	Deno.test({
 		name: "API Endpoint GET /geo",
 		async fn() {
 			const postRequest = await fetch("https://airdash.herokuapp.com/geo?query=vasastan", {
+				method: "GET",
+			});
+			assertEquals(postRequest.status, 200);
+		},
+		sanitizeResources: false,
+		sanitizeOps: false,
+	});
+
+	//Testing /video/:mac endpoint.
+	Deno.test({
+		name: "API Endpoint GET /video/:mac",
+		async fn() {
+			const postRequest = await fetch("https://airdash.herokuapp.com/video/mac-1", {
 				method: "GET",
 			});
 			assertEquals(postRequest.status, 200);

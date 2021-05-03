@@ -14,13 +14,16 @@
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { uploadCoordinates, Coordinate } from "./heatmap.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
-import { Codec } from '../lib/codec.ts';
+import { Codec, CustomHeaders } from '../lib/codec.ts';
 
 export const infoHandler: HandlerFunc = async (c: Context) => {
 	// console.log(c);
 	const request = await c.body;
-	const content = typeof request == 'object' ? JSON.stringify(request) : '' + request;
-	console.log(`Request Body (${typeof request}): ${content}`);
+	const content: string = typeof request == 'object' ? JSON.stringify(request) : '' + request;
+	const headers: CustomHeaders = Codec.CustomHeaders(c);
+	console.log(`Headers: ${JSON.stringify(headers)}`);
+
+	console.log(`Request Body: ${content}`);
 
 	const data = Codec.Info(content);
 	if (data.Succeeded) {

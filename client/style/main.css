@@ -23,14 +23,14 @@ body {
 }
 
 .top-polygon {
-	position: absolute;
+	position: fixed;
 	left: 0px;
 	top: 0px;
 	width: 30%;
 }
 
 .bottom-polygon {
-	position: absolute;
+	position: fixed;
 	right: 0px;
 	bottom: 0px;
 	width: 30%;
@@ -133,18 +133,21 @@ a:hover {
 
 .recordings-table {
 	width: 100%;
-	border: 3px solid black;
 	text-align: left;
 	border-collapse: collapse;
-	background-color: #e2d7d7;
+	background-color: #ccd5dc;
 }
 
 .recordings-table tr,
 .recordings-table tr th,
 .recordings-table tr td {
-	border: 1px solid black;
+	border: 1px solid #505050;
 	border-collapse: collapse;
 	padding: 10px;
+}
+
+.recordings-table tr:nth-child(even) {
+	background-color: #afb5b9;
 }
 
 .heatmap-controls {
