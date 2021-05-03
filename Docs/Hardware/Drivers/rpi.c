@@ -37,12 +37,12 @@ int main() {
 		printf("fuck me\n");
 		return -1;
 	}
-	INP_GPIO(3);
-	OUT_GPIO(3);
+	INP_GPIO(4);
+	OUT_GPIO(4);
 	while (1) {
-		GPIO_SET=1<<3;
+		GPIO_SET=1<<4;
 		sleep (1);
-		GPIO_CLR=1<<3;
+		GPIO_CLR=1<<4;
 		sleep(1);
 	}
 	
