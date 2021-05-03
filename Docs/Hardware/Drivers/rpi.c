@@ -1,5 +1,7 @@
 #include "rpi.h"
 
+//struct bcm2835_peripheral gpio = {GPIO_BASE};
+
 int map_peripheral(struct bcm2835_peripheral *p) {
 	if ((p->mem_fd = open("/dev/mem", O_RDWR|O_SYNC))<0) {
 		printf("cant open /dev/mem, try perms or sudo idk fuck\n");
