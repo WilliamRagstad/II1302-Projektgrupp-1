@@ -64,7 +64,7 @@ async function SearchDate() {
     }
     const path = '/data/' + fromdate.toLocaleDateString() + '/' + todate.toLocaleDateString();
     const result = await API.Get(path);
-    if (result != null) {
+    if (result != null || result != []) {
         heatmap.setData(createHeatmap(result));
         return;
     }
