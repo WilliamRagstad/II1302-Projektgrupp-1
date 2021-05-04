@@ -211,7 +211,7 @@ int gpioInitialise(void)
    return 0;
 }
 
-main()
+int main()
 {
    int i;
 

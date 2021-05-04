@@ -1,6 +1,19 @@
 import { Firebase } from '../lib/firebaseClient.ts';
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 
+/*****************************************************************************************************
+ *
+ * 	API Endpoint for Heatmap to download crash coordinate data.
+ *
+ * 	Read the Heatmap Protocol here:
+ *  https://docs.google.com/document/d/1SCksR1ZiXcY1JKih0xlanwZ_goSRLAft9CjBOXBbfL4/edit#
+ *
+ * 	Author: William Axbrink
+ * 	Created: 2021-05-03
+ *
+ * ****************************************************************************************************
+*/
+
 /*
 console.log(client);
 console.log((await client.Firestore.GetPath('testdata/0Ss4dMvTDpRJGq2jGB6q')));
@@ -20,11 +33,11 @@ console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
 // console.log(await client.Storage.Metadata('mac-1/cat.jpg'))
 // console.log(client.Storage.GetLink('mac-1/cat.jpg'));
 
-
 export interface Coordinate {
 	lat: number;
 	long: number;
 }
+
 //Uploads JSON data to firestore
 export async function uploadCoordinates(data: Coordinate) {
 	console.log(await Firebase.Firestore.CreateDocument('testhttp	', '', {
@@ -37,6 +50,7 @@ export async function uploadCoordinates(data: Coordinate) {
 	}));
 }
 
+//Calls on Firebase Firestore to retrieve data from the collection 'testdata' with a maximum of maxCount nodes.
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
