@@ -1,4 +1,7 @@
 
+
+
+
 let videos = [
 	{id: "11:12:11:11", date: "12/11/2019", url: "blaha8"},
 	{id: "11:11:11:18", date: "12/11/2010", url: "blaha9"},
@@ -9,7 +12,18 @@ let videos = [
 	{id: "11:00:11:10", date: "06/11/2012", url: "blaha14"}
 ];
 
+function generateTableContent(){
+	const URL = await API.Get('video/mac-1');
+	var videos = [];
+	
+	URL.forEach(item => 
+		videos.push({id: 88:88:88, url: item})
+	)
+	return videos;
+}
 
+
+//generates the head of the table
 function generateTableHead(table, data) {
   let thead = table.createTHead();
   let row = thead.insertRow();
@@ -21,6 +35,7 @@ function generateTableHead(table, data) {
   }
 }
 
+//generates the table formate and adds data into the cells
 function generateTable(table, data) {
   for (let element of data) {
     let row = table.insertRow();
@@ -32,10 +47,11 @@ function generateTable(table, data) {
   }
 }
 
+
 let table = document.querySelector("table");
 let data = Object.keys(videos[0]);
 generateTableHead(table, data);
-generateTable(table, videos);
+generateTable(table, generateTableContent());
 
 
 

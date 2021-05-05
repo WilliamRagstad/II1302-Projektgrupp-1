@@ -47,7 +47,7 @@ export async function videoByIDHandler(c: Context) {
 	return await getVideos(macaddress);
 }
 
-async function getVideos(macaddress) {
+async function getVideos(macaddress:any) {
 	const rawData = await Firebase.Storage.List("mac-1");
 	var videoURL: any[] = [];
 	
