@@ -132,7 +132,8 @@ class FirebaseClient {
 		},
 		SerializeURI: (uri: string) => uri.replaceAll('/', '%2F'),
 		Metadata: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}`, 'GET'),
-		GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
+    GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
+    List: (objectPath: string) => this.Storage.Request(`o/?prefix=${this.Storage.SerializeURI(objectPath)}/`, 'GET'),
 		Download: (objectPath: string) => this.Storage.AbsoluteRequest(this.Storage.GetLink(objectPath), 'GET', undefined, undefined, false),
 		/**
 		 * Upload a file to Firebase Storage.

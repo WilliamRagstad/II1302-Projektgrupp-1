@@ -40,10 +40,10 @@ async function SearchLocation() {
         query = "Gamla Stan";
     }
     const result = await API.Get('/geo?query=' + query);
-    if (result.data) {
-        const first = result.data[0];
+    if (result.candidates) {
+        const first = result.candidates[0];
         if (first) {
-            map.setCenter(new window.google.maps.LatLng(first.latitude, first.longitude));
+            map.setCenter(new window.google.maps.LatLng(first.geometry.location.lat, first.geometry.location.lng));
             return;
         }
     }
@@ -64,7 +64,7 @@ async function SearchDate() {
     }
     const path = '/data/' + fromdate.toLocaleDateString() + '/' + todate.toLocaleDateString();
     const result = await API.Get(path);
-    if (result != null) {
+    if (result != null || result != []) {
         heatmap.setData(createHeatmap(result));
         return;
     }
