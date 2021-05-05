@@ -11,6 +11,14 @@ export function testFirebase() {
 		},
 	});
 
+	//Tests the ListObjects function for Firebase Storage.
+	Deno.test({
+		name: "Firebase Storage ListObjects Test",
+		async fn() {
+			const rawData = await Firebase.Storage.ListObjects("mac-1")
+			assertEquals(rawData.items[0].name, "mac-1/3E0C2CA38FB4.txt");
+		},
+	});
 	//Tests the SerializeURI function.
 	Deno.test({
 		name: "Firestorage Client SerializeURI Test",
