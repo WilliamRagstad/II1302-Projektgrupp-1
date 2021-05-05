@@ -9,7 +9,6 @@ let videos = [
 	{id: "11:00:11:10", date: "06/11/2012", url: "blaha14"}
 ];
 
-//generate video data function
 
 function generateTableHead(table, data) {
   let thead = table.createTHead();

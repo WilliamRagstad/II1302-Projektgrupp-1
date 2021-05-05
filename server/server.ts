@@ -2,7 +2,7 @@ import { Application } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { parse } from 'https://deno.land/std/flags/mod.ts';
 import { heatmapHandler, heatmapByTimeHandler } from './api/heatmap.ts';
 import { searchGeoHandler } from "./api/geosearch.ts";
-import { videoHandler } from "./api/video.ts";
+import { videoHandler, videoByIDHandler } from "./api/video.ts";
 import { infoHandler } from "./api/info.ts";
 
 const { args } = Deno;
@@ -27,6 +27,7 @@ app
 	.get("/data", heatmapHandler)
 	.get("/data/:from/:to", heatmapByTimeHandler)
 	.get("/geo", searchGeoHandler)
+	.get("/video/:macaddress", videoByIDHandler)
 	.post("/info", infoHandler)
 	.post("/video", videoHandler)
 	.start({ port: HOST_PORT });
