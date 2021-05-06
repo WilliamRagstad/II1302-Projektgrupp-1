@@ -10,8 +10,8 @@ async function generateTableContent(mac:any){
 	const URL = await API.Get('video/'+mac);
 	var videos: any[] = [];
 
-	URL.forEach((item:any) =>
-		videos.push({id: "88:88:88", date:"hej", url: item})
+	URL.forEach((item: any) =>
+		videos.push({ id: "88:88:88", date: "hej", url: item })
 	)
 	return videos;
 }
@@ -42,8 +42,9 @@ function generateTable(table: any, data: any) {
 		cell2.appendChild(text2);
 
 		const cell3 = row.insertCell();
-		const text3 = window.document.createTextNode(element.url);
-		cell3.appendChild(text3);
+		const iframe = window.document.createElement("iframe");
+		iframe.src = element.url;
+		cell3.appendChild(iframe);
 	}
 }
 export async function searchID(){
