@@ -6,12 +6,12 @@ declare global {
 	}
 }
 
-async function generateTableContent(){
+async function generateTableContent() {
 	const URL = await API.Get('video/88:88:88:88');
 	var videos: any[] = [];
 
-	URL.forEach((item:any) =>
-		videos.push({id: "88:88:88", date:"hej", url: item})
+	URL.forEach((item: any) =>
+		videos.push({ id: "88:88:88", date: "hej", url: item })
 	)
 	return videos;
 }
@@ -43,13 +43,14 @@ function generateTable(table: any, data: any) {
 		cell2.appendChild(text2);
 
 		const cell3 = row.insertCell();
-		const text3 = window.document.createTextNode(element.url);
-		cell3.appendChild(text3);
+		const iframe = window.document.createElement("iframe");
+		iframe.src = element.url;
+		cell3.appendChild(iframe);
 	}
 }
 
 
-async function init(){
+async function init() {
 	const table = window.document.querySelector("table");
 	const videos = await generateTableContent();
 	const data = Object.keys(videos[0]);

@@ -40,8 +40,10 @@ function generateTable(table, data) {
         const text2 = window.document.createTextNode(element.date);
         cell2.appendChild(text2);
         const cell3 = row.insertCell();
-        const text3 = window.document.createTextNode(element.url);
-        cell3.appendChild(text3);
+        let iframe = window.document.createElement("iframe");
+        iframe.src = element.url;
+        iframe.autoplay = false;
+        cell3.appendChild(iframe);
     }
 }
 async function init() {
