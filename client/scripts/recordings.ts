@@ -56,6 +56,8 @@ export function searchID(){
 	createTable(query);
 }
 
+window.document.getElementById('search-text').addEventListener('keydown', (e: any) => e.key == 'Enter' && searchID());
+
 async function createTable(mac:any){
 	const table = window.document.querySelector("table");
 	const videos = await generateTableContent(mac);
