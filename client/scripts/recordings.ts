@@ -11,7 +11,7 @@ async function generateTableContent(mac:any){
 	var videos: any[] = [];
 
 	URL.forEach((item: any) =>
-		videos.push({ id: "88:88:88", date: "hej", url: item })
+		videos.push({ MAC: mac, Date: new Date(), Link: item })
 	)
 	return videos;
 }
@@ -34,16 +34,16 @@ function generateTable(table: any, data: any) {
 		const row = table.insertRow();
 
 		const cell1 = row.insertCell();
-		const text1 = window.document.createTextNode(element.id);
+		const text1 = window.document.createTextNode(element.MAC);
 		cell1.appendChild(text1);
 
 		const cell2 = row.insertCell();
-		const text2 = window.document.createTextNode(element.date);
+		const text2 = window.document.createTextNode(element.Date);
 		cell2.appendChild(text2);
 
 		const cell3 = row.insertCell();
 		const iframe = window.document.createElement("iframe");
-		iframe.src = element.url;
+		iframe.src = element.Link;
 		cell3.appendChild(iframe);
 	}
 }
