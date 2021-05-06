@@ -23,14 +23,14 @@ body {
 }
 
 .top-polygon {
-	position: absolute;
+	position: fixed;
 	left: 0px;
 	top: 0px;
 	width: 30%;
 }
 
 .bottom-polygon {
-	position: absolute;
+	position: fixed;
 	right: 0px;
 	bottom: 0px;
 	width: 30%;
