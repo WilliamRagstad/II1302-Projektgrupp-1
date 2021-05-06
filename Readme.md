@@ -8,8 +8,12 @@ En smart dashcam - som kan spela in video och skicka de senaste 30 sekunderna if
 
 [Länk till Hemsidan](https://airdash.herokuapp.com/)
 ## Dokumentation
-
-![alt text](https://github.com/WilliamRagstad/II1302-Projektgrupp-1/blob/master/Docs/Wiki/AirDash%20Software%20overview.png)
+### Concept Map
 ![alt text](https://github.com/WilliamRagstad/II1302-Projektgrupp-1/blob/master/Docs/Wiki/Concept%20Map.png)
+
+### Software Overview
+![alt text](https://github.com/WilliamRagstad/II1302-Projektgrupp-1/blob/master/Docs/Wiki/AirDash%20Software%20overview.png)
+
+
 
 Läs hela dokumentationen på [Wiki](https://github.com/WilliamRagstad/II1302-Projektgrupp-1/wiki).
