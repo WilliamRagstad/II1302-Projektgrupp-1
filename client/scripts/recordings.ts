@@ -47,7 +47,7 @@ function generateTable(table: any, data: any) {
 		cell3.appendChild(iframe);
 	}
 }
-export async function searchID(){
+export function searchID(){
 	var query = window.document.getElementById('search-text').value;
 	var table = window.document.querySelector("table")
 	try {
