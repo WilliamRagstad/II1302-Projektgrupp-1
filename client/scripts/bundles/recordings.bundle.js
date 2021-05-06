@@ -9,8 +9,8 @@ const API = {
         }
     }
 };
-async function generateTableContent() {
-    const URL1 = await API.Get('video/88:88:88:88');
+async function generateTableContent(mac) {
+    const URL1 = await API.Get('video/' + mac);
     var videos = [];
     URL1.forEach((item)=>videos.push({
             id: "88:88:88",
@@ -44,11 +44,23 @@ function generateTable(table, data) {
         cell3.appendChild(text3);
     }
 }
-async function init() {
+async function searchID() {
+    var query = window.document.getElementById('search-text').value;
+    var table = window.document.querySelector("table");
+    try {
+        for(var i in table.rows){
+            table.deleteRow(i);
+        }
+    } catch  {
+        console.log("table cleaned");
+    }
+    createTable(query);
+}
+async function createTable(mac) {
     const table = window.document.querySelector("table");
-    const videos = await generateTableContent();
+    const videos = await generateTableContent(mac);
     const data = Object.keys(videos[0]);
     generateTableHead(table, data);
     generateTable(table, videos);
 }
-init();
+createTable("88:88:88:88");

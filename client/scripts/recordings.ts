@@ -6,8 +6,8 @@ declare global {
 	}
 }
 
-async function generateTableContent(){
-	const URL = await API.Get('video/88:88:88:88');
+async function generateTableContent(mac:any){
+	const URL = await API.Get('video/'+mac);
 	var videos: any[] = [];
 
 	URL.forEach((item:any) =>
@@ -15,7 +15,6 @@ async function generateTableContent(){
 	)
 	return videos;
 }
-
 
 //generates the head of the table
 function generateTableHead(table: any, data: any) {
@@ -47,13 +46,21 @@ function generateTable(table: any, data: any) {
 		cell3.appendChild(text3);
 	}
 }
+export async function searchID(){
+	var query = window.document.getElementById('search-text').value;
+	var table = window.document.querySelector("table")
+	try {
+	for(var i in table.rows) {	table.deleteRow(i)	}
+	} catch {console.log("table cleaned")}
+	createTable(query);
+}
 
-
-async function init(){
+async function createTable(mac:any){
 	const table = window.document.querySelector("table");
-	const videos = await generateTableContent();
+	const videos = await generateTableContent(mac);
 	const data = Object.keys(videos[0]);
 	generateTableHead(table, data);
 	generateTable(table, videos);
 }
-init();
+//88:88:88:88 is a placeholder, supposed to be ""
+createTable("88:88:88:88");
