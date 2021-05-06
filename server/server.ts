@@ -27,7 +27,7 @@ app
 	.get("/data", heatmapHandler)
 	.get("/data/:from/:to", heatmapByTimeHandler)
 	.get("/geo", searchGeoHandler)
-	.get("/video/:macaddress", videoByIDHandler)
+	.get("/video/:mac", videoByIDHandler)
 	.post("/info", infoHandler)
 	.post("/video", videoHandler)
 	.start({ port: HOST_PORT });
