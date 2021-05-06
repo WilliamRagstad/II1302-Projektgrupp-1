@@ -14,7 +14,7 @@ async function generateTableContent(mac) {
     var videos = [];
     URL1.forEach((item)=>videos.push({
             MAC: mac,
-            Date: new Date(),
+            Date: new Date().toDateString(),
             Link: item
         })
     );
