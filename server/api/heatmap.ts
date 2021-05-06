@@ -57,6 +57,7 @@ async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	return rawData.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
 }
 
+//Calls on Firebase Firestore to retrieve data from the collection 'testdate' with a maximum of maxCount nodes and timestamps between fromdate and todate.
 async function getCoordinatesByTime(maxCount: number, fromdate: Date, todate: Date) {
 	const rawData = await Firebase.Firestore.GetPath('testDate', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
@@ -76,6 +77,5 @@ export async function heatmapByTimeHandler(c: Context) {
 	const { from, to } = c.params as { from: string, to: string }
 	const fromdate = new Date(from);
 	const todate = new Date(to);
-
 	return await getCoordinatesByTime(100, fromdate, todate);
 }
