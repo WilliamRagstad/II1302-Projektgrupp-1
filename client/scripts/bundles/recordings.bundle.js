@@ -14,7 +14,7 @@ async function generateTableContent(mac) {
     var videos = [];
     URL1.forEach((item)=>videos.push({
             MAC: mac,
-            Date: new Date(),
+            Date: new Date().toDateString(),
             Link: item
         })
     );
@@ -45,7 +45,7 @@ function generateTable(table, data) {
         cell3.appendChild(iframe);
     }
 }
-async function searchID() {
+function searchID() {
     var query = window.document.getElementById('search-text').value;
     var table = window.document.querySelector("table");
     try {
@@ -57,6 +57,8 @@ async function searchID() {
     }
     createTable(query);
 }
+window.document.getElementById('search-text').addEventListener('keydown', (e)=>e.key == 'Enter' && searchID()
+);
 async function createTable(mac) {
     const table = window.document.querySelector("table");
     const videos = await generateTableContent(mac);
