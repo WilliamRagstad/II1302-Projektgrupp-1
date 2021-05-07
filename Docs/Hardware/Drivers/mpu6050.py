@@ -70,7 +70,7 @@ while True:
 	gyro_y = read_raw_data(GYRO_YOUT_H)
 	gyro_z = read_raw_data(GYRO_ZOUT_H)
 
-	#Fulle scale range +/- 250 degree/C as per sensitivity scale factor
+	#scale to +- 16g
 	Ax = acc_x/2048.0
 	Ay = acc_y/2048.0
 	Az = acc_z/2048.0
@@ -79,8 +79,8 @@ while True:
 	Gy = gyro_y/131.0
 	Gz = gyro_z/131.0
 
+
 #	print("Gx=%.2f" %Gx, "Gy=%.2f" %Gy,"Gz=%.2f" %Gz, "Ax=%.2f g" %Ax, "Ay=%.2f g" %Ay, "Az=%.2f g" %Az)
 	print("Ax = %.2f g" %Ax, "Ay = %.2f g" %Ay, "Az = %.2f g" %Az)
-
 	sleep(1)
 	#sleep(0.02)
