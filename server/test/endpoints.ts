@@ -86,4 +86,17 @@ export function testEndpoints() {
 		sanitizeResources: false,
 		sanitizeOps: false,
 	});
+
+	//Testing /video/:mac endpoint.
+	Deno.test({
+		name: "API Endpoint GET /video/:mac",
+		async fn() {
+			const postRequest = await fetch("https://airdash.herokuapp.com/video/mac-1", {
+				method: "GET",
+			});
+			assertEquals(postRequest.status, 200);
+		},
+		sanitizeResources: false,
+		sanitizeOps: false,
+	});
 }
