@@ -151,14 +151,6 @@ class FirebaseClient {
 }
 
 
-
-
-
-
-
-
-
-
 const createSignedJWT = async (
 	serviceAccountKey: ServiceAccountKey,
 ): Promise<string> => {

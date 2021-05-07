@@ -14,25 +14,6 @@ import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
  * ****************************************************************************************************
 */
 
-/*
-console.log(client);
-console.log((await client.Firestore.GetPath('testdata/0Ss4dMvTDpRJGq2jGB6q')));
-
-client.Firestore.UpdateDocumentFields('test/test', {
-	inserted: {
-		integerValue: 111
-	}
-});
-
-console.log(await client.Firestore.CreateDocument('test', 'MyID2', {
-	sampleData: {
-		stringValue: "Hello!"
-	}
-}));
-*/
-// console.log(await client.Storage.Metadata('mac-1/cat.jpg'))
-// console.log(client.Storage.GetLink('mac-1/cat.jpg'));
-
 export interface Coordinate {
 	lat: number;
 	long: number;

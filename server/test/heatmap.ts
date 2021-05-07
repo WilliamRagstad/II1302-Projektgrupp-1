@@ -13,10 +13,4 @@ export function testHeatmap() {
 			});
 		},
 	});
-
-	//Tests the heatmap generator, not working due to Google Maps API not existing in this file.
-	/*Deno.test("Heatmap Generator Test", async () => {
-	  var bool = initMap();
-	  assertEquals(bool, true);
-	});*/
 }
