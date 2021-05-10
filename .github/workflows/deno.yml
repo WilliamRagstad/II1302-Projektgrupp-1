@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        deno: ["v1.x", "nightly"]
+        deno: ["v1.8.3", "nightly"]
         os: [macOS-latest, windows-latest, ubuntu-latest]
 
     steps:
