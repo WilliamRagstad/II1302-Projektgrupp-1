@@ -16,5 +16,20 @@ export function testHeatmapGui() {
             await Sinco.assertUrlIs("https://airdash.herokuapp.com/");
             await Sinco.done();
         }
-    })
+    });
+    //Tests that heatmap search location does not redirect to another page.
+    Deno.test({
+        name: "Test searchLocation page not redirected",
+        async fn() {
+            //Setup
+            const Sinco = new HeadlessBrowser();
+            await Sinco.build();
+            await Sinco.goTo("https://airdash.herokuapp.com/heatmap");
+
+            await Sinco.type('input[id="search-text"]', "hello world");
+            await Sinco.click('button#searchlocation-btn');
+            await Sinco.assertSee("Could not find location!");
+            await Sinco.done();
+        }
+    });
 }

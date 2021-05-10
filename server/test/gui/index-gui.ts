@@ -16,7 +16,7 @@ export function testIndexGui() {
             await Sinco.assertUrlIs("https://airdash.herokuapp.com/heatmap");
             await Sinco.done();
         }
-    })
+    });
     //Test navigation to recordings page.
     Deno.test({
         name: "Test recordings navigation",
@@ -31,7 +31,7 @@ export function testIndexGui() {
             await Sinco.assertUrlIs("https://airdash.herokuapp.com/recordings");
             await Sinco.done();
         }
-    })
+    });
     //Test navigation to about us page.
     Deno.test({
         name: "Test about us navigation",
@@ -46,5 +46,5 @@ export function testIndexGui() {
             await Sinco.assertUrlIs("https://airdash.herokuapp.com/about");
             await Sinco.done();
         }
-    })
+    });
 }
