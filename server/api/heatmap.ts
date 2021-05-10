@@ -21,7 +21,7 @@ export interface Coordinate {
 
 //Uploads JSON data to firestore
 export async function uploadCoordinates(data: Coordinate) {
-	console.log(await Firebase.Firestore.CreateDocument('testhttp	', '', {
+	console.log(await Firebase.Firestore.CreateDocument('testhttp', '', {
 		lat: {
 			doubleValue: data.lat
 		},
@@ -43,7 +43,7 @@ async function getCoordinatesByTime(maxCount: number, fromdate: Date, todate: Da
 	const rawData = await Firebase.Firestore.GetPath('testDate', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
 	var coordinates: Coordinate[] = [];
-	rawData.documents.forEach( (data: any) => {
+	rawData.documents.forEach((data: any) => {
 		if (new Date(data.fields.timestamp.timestampValue) >= fromdate && new Date(data.fields.timestamp.timestampValue) <= todate)
 			coordinates.push({ lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue });
 	});
