@@ -1,3 +1,5 @@
+import { Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+
 export type CodecResult<T> = {
 	Succeeded: true,
 	Result: T
@@ -56,7 +58,15 @@ function Expected<T>(segment: string): CodecResult<T> {
 function Invalid<T>(segment: string, message: string): CodecResult<T> {
 	return produceError(`Invalid ${segment}! ${message}`);
 }
+export type CustomHeaders = Record<string, string>;
 export const Codec = {
+	CustomHeaders: function (c: Context): CustomHeaders {
+		const result: CustomHeaders = {};
+		c.request.headers.forEach((val, key) => {
+			if (key.startsWith('x-')) result[key.replace('x-', '')] = val;
+		});
+		return result;
+	},
 	Video: function (request: string): CodecResult<VideoResult> {
 		const mac = bytes(request, 6 * 2); // 6 bytes * 2 to represent a 255 number = 48 bits
 		if (!mac.Succeeded) return Expected('MAC');
@@ -70,6 +80,22 @@ export const Codec = {
 		};
 	},
 	Info: function (request: string): CodecResult<InfoResult> {
+		const j = JSON.parse(request);
+		if (!j["MAC"]) return Expected('MAC address');
+		if (!j["Accelerometer"]) return Expected('accelerometer integer');
+		if (isNaN(parseInt(j["Accelerometer"]))) return Invalid('accelerometer', 'must be integer');
+		if (!j["GPS"]) return Expected('GPS coordinates');
+		if (!j["GPS"]["lat"] || !j["GPS"]["long"]) return Invalid('GPS coordinates', 'lat and long fields');
+		if (isNaN(parseFloat(j["GPS"]["lat"]))) return Invalid('GPS coordinates', 'lat must be float');
+		if (isNaN(parseFloat(j["GPS"]["long"]))) return Invalid('GPS coordinates', 'long must be float');
+
+		return {
+			Succeeded: true,
+			Result: j
+		};
+
+		/*
+		! Old info codec parser
 		const mac = bytes(request, 6 * 2); // 6 bytes * 2 to represent a 255 number = 48 bits
 		if (!mac.Succeeded) return Expected('MAC address');
 		const accelerometer = bytes(mac.Remaining, 4); // 4 bytes = 32 bit = default integer size
@@ -96,6 +122,7 @@ export const Codec = {
 				}
 			}
 		};
+		*/
 	},
 	/**
 	 * Convert a 32 bit unsigned integer to a string representation
