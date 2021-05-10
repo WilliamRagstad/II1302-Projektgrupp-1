@@ -60,6 +60,15 @@ function Invalid<T>(segment: string, message: string): CodecResult<T> {
 }
 export type CustomHeaders = Record<string, string>;
 export const Codec = {
+	/**
+	 * Custom headers are prefixed with 'X-' meaning they are extra non-standard headers.
+	 * This functions utilize the underlying `ServerRequest` instance from Context (https://deno.land/x/abc@v1.3.0/context.ts).
+	 * Extracts and filter the headers to select only the extra ones using the `Headers` (https://deno.land/std@0.95.0/http/server.ts).
+	 * Examples of header usages can be found at: https://deno.land/std@0.95.0/http.
+	 *
+	 * @param c Request Context
+	 * @returns The parsed headers
+	 */
 	CustomHeaders: function (c: Context): CustomHeaders {
 		const result: CustomHeaders = {};
 		c.request.headers.forEach((val, key) => {
