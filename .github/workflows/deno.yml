@@ -36,6 +36,11 @@ jobs:
         with:
           deno-version: ${{ matrix.deno }} # tests across multiple Deno versions
           
+      - name: Cache Dependencies
+        run: deno cache server/lib/deps.ts
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'        
+        
       - name: Run Tests
         run: deno test --allow-net --allow-read server/test/index.ts
         env:
