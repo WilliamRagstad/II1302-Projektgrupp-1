@@ -12,8 +12,8 @@ testval = {
 
 headers = {'content-type':'application/raw','content-length':'128', 
 	"x-MAC": '3E0C2CA38FB4', "x-Accelerometer" : '12',
-	"GPS" :json.dumps( {"lat": '-31.212',"long": '5.6752'})
-}
+	"x-lat": '0',"x-lng": '0'}
+
 
 x = requests.post('http://airdash.herokuapp.com/info',  
 headers = headers, 
