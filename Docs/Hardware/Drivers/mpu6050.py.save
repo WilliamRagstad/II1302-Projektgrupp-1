@@ -84,9 +84,6 @@ while True:
 	Gy = gyro_y/131.0
 	Gz = gyro_z/131.0
 
-
-
-
 #	acc_data = ["Ax = %.2f g", %Ax, "Ay = %.2f g" %Ay, "Az = %.2f g" %Az]
 
 #	file1 = open("datafile.txt", "w")
