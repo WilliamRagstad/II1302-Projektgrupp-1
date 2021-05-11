@@ -28,19 +28,18 @@ def MPU_Init():
 	bus.write_byte_data(Device_Address, CONFIG, 0)
 	bus.write_byte_data(Device_Address, GYRO_CONFIG, 0)
 	bus.write_byte_data(Device_Address, INT_ENABLE, 1)
-	bus.write_byte_data(Device_Address, ACCEL_CONFIG, 24)
+	bus.write_byte_data(Device_address, ACCEL_CONFIG, 24)
 
 #reads the raw data from the mpu6050 unit
 def read_raw_data(addr):
-	high = bus.read_byte_data(Device_Address, addr)
-	low = bus.read_byte_data(Device_Address, addr+1)
+	high = bus.read_byte_data(Device_address, addr)
+	low = bus.read_byte_data(Device_address, addr+1)
 	value = ((high << 8) | low)
 	if(value > 32768):
 		value = value - 65536
 	return value
 
 bus = smbus.SMBus(1)
-
 Device_Address = 0X68
 
 MPU_Init()
@@ -51,9 +50,9 @@ file1 = open("blackBox.txt", "w")
 #camera start recording
 Cam.start_recording("/home/pi/Documents/Docs/Hardware/Drivers/test.h264")
 
-
+#forever loop until forever die
+#wgule is king wgule is life love blabla yes
 highestA = 0
-#read-loop
 while True:
 
 	#read raw data
@@ -68,33 +67,32 @@ while True:
 	Ay = acc_y/2048.0
 	Az = acc_z/2048.0
 
-	#insert scaled gyro raw here
+	#insert scaled gtro raw here
 
 	if(abs(Ax) >= 4.0 or  abs(Ay) >= 4.0  or abs(Az) >= 4.0):
 		file1.write('{}\n'.format(Az))
 		file1.write('{}\n'.format(Ay))
 		file1.write('{}\n'.format(Ax))
 		highestA = max(Ax, Ay, Az)
-		Cam.stop_recording()
+		Cam.stop_recordings
 		break
 	sleep(0.02)
-file1.close()
+f.close()
 
 
 #netcode goes here
 latitude = 39.90564
 longitude = 116.39755
 
-headers  = { 'content-type' : 'application/raw', 'content-legnth' : '128',
-	"x-MAC": '133742069', "x-Accelerometer": '{accVal}'.format(accVal = highestA),
-	"x-Lat": '{Lat}'.format(Lat = latitude), 
-	"x-Lng": '{Long}'.format(Long = longitude)}
+header = { 'content-type' : 'application/raw', 'content-legnth' : '128'
+	"x-MAC": '133742069', "x-Accelerometer": '{}'.format(accVal = highestA),
+	"x-Lat": '{}'.format(Lat = latitude), 
+	"x-Lng": '{}'.format(Long = longitude)}
 
-data = { 'content-type' : 'application/raw', 'content-legnth' : '128',
-	"x-MAC": '133742069', "x-Accelerometer": '{accVal}'.format(accVal = highestA),
-	"x-Lat": '{Lat}'.format(Lat = latitude), 
-	"x-Lng": '{Long}'.format(Long = longitude)}
-
+data = {{ 'content-type' : 'application/raw', 'content-legnth' : '128'
+	"x-MAC": '133742069', "x-Accelerometer": '{}'.format(accVal = highestA),
+	"x-Lat": '{}'.format(Lat = latitude), 
+	"x-Lng": '{}'.format(Long = longitude)
 x = requests.post('http://airdash.herokuapp.com/info', headers = headers,
 	data = data)
 print(x.text)
