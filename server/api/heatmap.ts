@@ -1,5 +1,6 @@
 import { Firebase } from '../lib/firebaseClient.ts';
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+import { InfoResult } from "../lib/codec.ts";
 
 /*****************************************************************************************************
  *
@@ -23,13 +24,16 @@ export interface Coordinate {
 }
 
 //Uploads JSON data to firestore
-export async function uploadCoordinates(data: Coordinate) {
-	console.log(await Firebase.Firestore.CreateDocument('testdata', '', { // 'testhttp'
+export async function uploadCoordinates(data: InfoResult) {
+	console.log(await Firebase.Firestore.CreateDocument('testhttp', '', { // 'testdata'
 		lat: {
-			doubleValue: data.lat
+			doubleValue: data.GPS.lat
 		},
 		long: {
-			doubleValue: data.long
+			doubleValue: data.GPS.long
+		},
+		mac: {
+			stringValue: data.MAC
 		}
 	}));
 }

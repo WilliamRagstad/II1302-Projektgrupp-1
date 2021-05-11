@@ -30,7 +30,7 @@ export const infoHandler: HandlerFunc = async (c: Context) => {
 		console.log('Parsed', data.Result);
 
 		try {
-			await uploadCoordinates(data.Result.GPS);
+			await uploadCoordinates(data.Result);
 			return "OK\nParsed: " + JSON.stringify(data.Result);
 		} catch (error) {
 			throw new ErrorHandler(error.message, error.status || 500);

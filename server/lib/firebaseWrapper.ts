@@ -106,7 +106,7 @@ class FirebaseClient {
 		 * TODO: Fix rule for only allowing uploads from authenticated clients by using the token.
 		 * @param collectionPath Collection path in which to create the document.
 		 * @param documentID Document ID.
-		 * @param fields Optional pre-filled fields for the document.
+		 * @param fields Optional pre-filled fields for the document. Values must follow this syntax specification: https://cloud.google.com/firestore/docs/reference/rest/v1beta1/Value.
 		 * @returns The new document.
 		 */
 		CreateDocument: (collectionPath: string, documentID?: string, fields?: Record<string, unknown>) => this.Firestore.Request(`documents/${collectionPath}${documentID == undefined ? '' : `?documentId=${documentID}`}`, 'POST', fields && { fields: fields }),
@@ -132,8 +132,8 @@ class FirebaseClient {
 		},
 		SerializeURI: (uri: string) => uri.replaceAll('/', '%2F'),
 		Metadata: (objectPath: string) => this.Storage.Request(`o/${this.Storage.SerializeURI(objectPath)}`, 'GET'),
-    GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
-    List: (objectPath: string) => this.Storage.Request(`o/?prefix=${this.Storage.SerializeURI(objectPath)}/`, 'GET'),
+		GetLink: (objectPath: string) => `${this.storage}o/${this.Storage.SerializeURI(objectPath)}?alt=media`,
+		List: (objectPath: string) => this.Storage.Request(`o/?prefix=${this.Storage.SerializeURI(objectPath)}/`, 'GET'),
 		Download: (objectPath: string) => this.Storage.AbsoluteRequest(this.Storage.GetLink(objectPath), 'GET', undefined, undefined, false),
 		/**
 		 * Upload a file to Firebase Storage.
