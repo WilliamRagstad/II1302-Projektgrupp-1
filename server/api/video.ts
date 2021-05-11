@@ -29,20 +29,25 @@ function fileExtension(mime: string): string {
 }
 
 export const videoHandler: HandlerFunc = async (c: Context) => {
-	const file = await c.body;
+	// Reading raw bytes-method taken from:
+	// * https://doc.deno.land/builtin/stable#Deno.readAll
+	// * https://doc.deno.land/https/deno.land/x/abc@v1.3.1/vendor/https/deno.land/std/http/server.ts#ServerRequest
+
+	const fileBuffer: Uint8Array = await Deno.readAll(c.request.body);
 	// console.log(`Request Body (${typeof request}): ${content}`);
 
 	const headers: CustomHeaders = Codec.CustomHeaders(c);
-	const data = Codec.Video(file, headers);
+	const data = Codec.Video(fileBuffer, headers);
 	const mime = c.request.headers.get('Content-Type');
 	if (mime == null) throw new ErrorHandler("Expected Content-Type header", 400);
 	const fileExt = fileExtension(mime);
 	if (data.Succeeded) {
-		console.log(`Parsed: ${mime}`);
+		console.log(`Parsed: ${mime} size: ${fileBuffer.length}`);
 
 		try {
-			console.log(await Firebase.Storage.Upload(data.Result.MAC, randomID() + fileExt, file, mime));
-			return "OK\nParsed: " + mime;
+			const upload = await Firebase.Storage.Upload(data.Result.MAC, randomID() + fileExt, fileBuffer, mime);
+			console.log(upload);
+			return `OK\nParsed ${mime}: ${upload.name}`;
 		} catch (error) {
 			throw new ErrorHandler(error.message, error.status || 500);
 		}
