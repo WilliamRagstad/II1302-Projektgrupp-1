@@ -73,18 +73,9 @@ while True:
 		file1.write('{}\n'.format(Az))
 		file1.write('{}\n'.format(Ay))
 		file1.write('{}\n'.format(Ax))
-		if (abs(Az) >= abs(Ay) and abs(Az) >= abs(Ax)):
-			highest = Az
-			Cam.stop_recording()
-			break
-		elif (abs(Ay) >= abs(Az) and abs(Ay) >= abs(Ax)):
-			highest = Ay #lmao'
-			Cam.stop_recording()
-			break
-		elif (abs(Ax) >= abs(Az) and abs(Ax) >= abs(Ay)):
-			highest = Ax
-			Cam.stop_recording()
-			break
+		highest = max(Ax, Ay, Az)
+		Cam.stop_recordings
+		break
 	sleep(0.02)
 f.close()
 
