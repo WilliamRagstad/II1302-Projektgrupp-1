@@ -25,7 +25,7 @@ export const infoHandler: HandlerFunc = async (c: Context) => {
 
 	console.log(`Request Body: ${content}`);
 
-	const data = Codec.Info(content);
+	const data = Codec.Info(headers);
 	if (data.Succeeded) {
 		console.log('Parsed', data.Result);
 

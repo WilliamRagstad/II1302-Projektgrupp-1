@@ -72,35 +72,38 @@ export const Codec = {
 	CustomHeaders: function (c: Context): CustomHeaders {
 		const result: CustomHeaders = {};
 		c.request.headers.forEach((val, key) => {
-			if (key.startsWith('x-')) result[key.replace('x-', '')] = val;
+			if (key.startsWith('x-')) result[key.replace('x-', '').toUpperCase()] = val;
 		});
 		return result;
 	},
-	Video: function (request: string): CodecResult<VideoResult> {
-		const mac = bytes(request, 6 * 2); // 6 bytes * 2 to represent a 255 number = 48 bits
-		if (!mac.Succeeded) return Expected('MAC');
-		const rest = mac.Remaining;
+	Video: function (file: string, headers: CustomHeaders): CodecResult<VideoResult> {
+		if (!headers["MAC"]) return Expected('MAC-address');
 		return {
 			Succeeded: true,
 			Result: {
-				MAC: mac.Result,
-				Data: rest
+				MAC: headers["MAC"],
+				Data: file
 			}
 		};
 	},
-	Info: function (request: string): CodecResult<InfoResult> {
-		const j = JSON.parse(request);
-		if (!j["MAC"]) return Expected('MAC address');
-		if (!j["Accelerometer"]) return Expected('accelerometer integer');
-		if (isNaN(parseInt(j["Accelerometer"]))) return Invalid('accelerometer', 'must be integer');
-		if (!j["GPS"]) return Expected('GPS coordinates');
-		if (!j["GPS"]["lat"] || !j["GPS"]["long"]) return Invalid('GPS coordinates', 'lat and long fields');
-		if (isNaN(parseFloat(j["GPS"]["lat"]))) return Invalid('GPS coordinates', 'lat must be float');
-		if (isNaN(parseFloat(j["GPS"]["long"]))) return Invalid('GPS coordinates', 'long must be float');
+	Info: function (headers: CustomHeaders): CodecResult<InfoResult> {
+		if (!headers["MAC"]) return Expected('MAC-address');
+		if (!headers["ACCELEROMETER"]) return Expected('accelerometer integer');
+		if (isNaN(parseInt(headers["ACCELEROMETER"]))) return Invalid('accelerometer', 'must be integer');
+		if (!headers["LAT"] || !headers["LNG"]) return Expected('GPS coordinates (x-lat and x-lng headers)');
+		if (isNaN(parseFloat(headers["LAT"]))) return Invalid('GPS coordinates', 'x-lat must be float');
+		if (isNaN(parseFloat(headers["LNG"]))) return Invalid('GPS coordinates', 'x-lng must be float');
 
 		return {
 			Succeeded: true,
-			Result: j
+			Result: {
+				MAC: headers["MAC"],
+				Accelerometer: parseInt(headers["ACCELEROMETER"]),
+				GPS: {
+					lat: parseFloat(headers["LAT"]),
+					long: parseFloat(headers["LNG"])
+				}
+			}
 		};
 
 		/*
