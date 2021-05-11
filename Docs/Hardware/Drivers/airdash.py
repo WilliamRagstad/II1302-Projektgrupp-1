@@ -1,6 +1,8 @@
 import smbus
+import requests
 from time import sleep
 from picamera import PiCamera
+
 
 #Reg decs
 PWR_MGMT_1 = 0X6B
@@ -50,7 +52,7 @@ Cam.start_recording("/home/pi/Documents/Docs/Hardware/Drivers/test.h264")
 
 #forever loop until forever die
 #wgule is king wgule is life love blabla yes
-
+highestA = 0
 while True:
 
 	#read raw data
@@ -67,10 +69,36 @@ while True:
 
 	#insert scaled gtro raw here
 
-	if(Ax >= 4.0 or Ax <= -4.0 or Ay >= 4.0 or Ay <= -4.0 or Az >= 4.0 or Az <= -4.0):
+	if(abs(Ax) >= 4.0 or  abs(Ay) >= 4.0  or abs(Az) >= 4.0):
 		file1.write('{}\n'.format(Az))
 		file1.write('{}\n'.format(Ay))
 		file1.write('{}\n'.format(Ax))
-		if (Az > Ay and Az > Ax)
-		
-		if (Ay > Az and 
+		if (abs(Az) >= abs(Ay) and abs(Az) >= abs(Ax)):
+			highest = Az
+			Cam.stop_recording()
+			break
+		elif (abs(Ay) >= abs(Az) and abs(Ay) >= abs(Ax)):
+			highest = Ay #lmao'
+			Cam.stop_recording()
+			break
+		elif (abs(Ax) >= abs(Az) and abs(Ax) >= abs(Ay)):
+			highest = Ax
+			Cam.stop_recording()
+			break
+	sleep(0.02)
+f.close()
+
+
+#netcode goes here
+latitude = 39.90564
+longitude = 116.39755
+
+header = { 'content-type' : 'application/raw', 'content-legnth' : '128'
+	"x-MAC": '133742069', "x-Accelerometer": '{}'.format(accVal = highest),
+	"x-Lat": '{}'.format(Lat = latitude), 
+	"x-Lng": '{}.format(Long = longitude)}
+
+x = reqiests.post('http://airdash.herokuapp.com/info', headers = headers,
+	data = data)
+print(x.text)
+print(x.status_code)
