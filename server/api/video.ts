@@ -43,7 +43,7 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 		console.log(`Parsed: ${mime}`);
 
 		try {
-			console.log(await Firebase.Storage.Upload(data.Result.MAC, randomID() + fileExt, data.Result.Data, mime));
+			console.log(await Firebase.Storage.Upload(data.Result.MAC, randomID() + fileExt, file, mime));
 			return "OK\nParsed: " + mime;
 		} catch (error) {
 			throw new ErrorHandler(error.message, error.status || 500);
