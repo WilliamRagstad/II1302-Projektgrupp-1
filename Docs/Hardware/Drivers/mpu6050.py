@@ -19,7 +19,7 @@ ACCEL_CONFIG = 0x1C
 
 def MPU_Init():
 	#write to sample rate register
-	bus.write_byte_data(Device_Address, SMPLRT_DIV, 7)
+	bus.write_byte_data(Device_Address, SMPLRT_DIV, 0)
 
 	#write to power management register
 	bus.write_byte_data(Device_Address, PWR_MGMT_1, 1)
@@ -100,18 +100,18 @@ while True:
 #	print("Gx=%.2f" %Gx, "Gy=%.2f" %Gy,"Gz=%.2f" %Gz, "Ax=%.2f g" %Ax, "Ay=%.2f g" %Ay, "Az=%.2f g" %Az)
 #	print("Ax = %.2f g" %Ax, "Ay = %.2f g" %Ay, "Az = %.2f g" %Az)
 
-	if(Az > 2.0 ):
+	if(Az >=  4.0 ):
 		print("crash")
 		print("Az = %.2f g" %Az)
 		file1.write(s3)
 		file1.write('{}\n'.format(Az))
 
-	if(Az < -2.0):
+	if(Az <= -4.0):
 		print("crash")
 		print("Az = %.2f g" %Az)
 		file1.write(s3)
 		file1.write('{}\n'.format(Az))
 
-	sleep(1)
-	#sleep(0.02)
+	#sleep(1)
+	sleep(0.02)
 f.close()
