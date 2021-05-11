@@ -57,8 +57,11 @@ Cam.start_preview()
 #Cam.wait_recording(100)
 highestA = 0
 #read-loop
-while True:
 
+Ax = 0
+Ay = 0
+Az = 0
+while max(abs(Ax), abs(Ay), abs(Az)) < 4.0:
 	#read raw data
 	acc_x = read_raw_data(ACCEL_XOUT_H)
 	acc_y = read_raw_data(ACCEL_YOUT_H)
@@ -72,17 +75,15 @@ while True:
 	Az = acc_z/2048.0
 
 	#insert scaled gyro raw here
-
-	if(abs(Ax) >= 4.0 or  abs(Ay) >= 4.0  or abs(Az) >= 4.0):
-		file1.write('{}\n'.format(Az))
-		file1.write('{}\n'.format(Ay))
-		file1.write('{}\n'.format(Ax))
-		highestA = max(Ax, Ay, Az)
-		print('stopped recording!')
-		Cam.close()
-		break
-#	Cam.wait_recording()
 	sleep(0.02)
+
+file1.write('{}\n'.format(Az))
+file1.write('{}\n'.format(Ay))
+file1.write('{}\n'.format(Ax))
+highestA = max(Ax, Ay, Az)
+print('stopped recording!')
+Cam.close()
+
 file1.close()
 
 
