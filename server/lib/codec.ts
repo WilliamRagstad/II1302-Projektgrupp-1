@@ -78,6 +78,7 @@ export const Codec = {
 	},
 	Video: function (file: string, headers: CustomHeaders): CodecResult<VideoResult> {
 		if (!headers["MAC"]) return Expected('MAC-address');
+		if (!file) return Expected('File content');
 		return {
 			Succeeded: true,
 			Result: {
