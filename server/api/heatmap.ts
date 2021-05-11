@@ -23,21 +23,6 @@ export interface Coordinate {
 	long: number;
 }
 
-//Uploads JSON data to firestore
-export async function uploadCoordinates(data: InfoResult) {
-	console.log(await Firebase.Firestore.CreateDocument('testhttp', '', { // 'testdata'
-		lat: {
-			doubleValue: data.GPS.lat
-		},
-		long: {
-			doubleValue: data.GPS.long
-		},
-		mac: {
-			stringValue: data.MAC
-		}
-	}));
-}
-
 //Calls on Firebase Firestore to retrieve data from the collection 'testdata' with a maximum of maxCount nodes.
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);

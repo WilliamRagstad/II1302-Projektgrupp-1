@@ -16,6 +16,10 @@ import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 
+function randomID(): string {
+	return Math.random().toString(36).slice(2);
+}
+
 export const videoHandler: HandlerFunc = async (c: Context) => {
 	// console.log(c);
 	const request = await c.body;
@@ -26,12 +30,9 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 	const data = Codec.Video(content, headers);
 	if (data.Succeeded) {
 		console.log('Parsed', data.Result);
-		console.log(`Uploading ${data.Result.MAC}.txt...`);
-
-		const uploadResult = await Firebase.Storage.Upload('mac-1', data.Result.MAC + '.txt', data.Result.Data);
-		console.log('Upload result', uploadResult);
 
 		try {
+			console.log(await Firebase.Storage.Upload(data.Result.MAC, randomID() + '.mp4', data.Result.Data));
 			return "OK\nParsed: " + JSON.stringify(data.Result);
 		} catch (error) {
 			throw new ErrorHandler(error.message, error.status || 500);
