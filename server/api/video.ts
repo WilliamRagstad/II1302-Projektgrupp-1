@@ -14,7 +14,7 @@
 import { Firebase } from '../lib/firebaseClient.ts';
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
-import { Codec } from '../lib/codec.ts';
+import { Codec, CustomHeaders } from '../lib/codec.ts';
 
 export const videoHandler: HandlerFunc = async (c: Context) => {
 	// console.log(c);
@@ -22,7 +22,8 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 	const content = typeof request == 'object' ? JSON.stringify(request) : '' + request;
 	console.log(`Request Body (${typeof request}): ${content}`);
 
-	const data = Codec.Video(content);
+	const headers: CustomHeaders = Codec.CustomHeaders(c);
+	const data = Codec.Video(content, headers);
 	if (data.Succeeded) {
 		console.log('Parsed', data.Result);
 		console.log(`Uploading ${data.Result.MAC}.txt...`);
@@ -45,11 +46,11 @@ export async function videoByIDHandler(c: Context) {
 	return await getVideos(mac);
 }
 
-async function getVideos(mac:any) {
+async function getVideos(mac: any) {
 	const rawData = await Firebase.Storage.List(mac);
 	var videoURL: any[] = [];
-	rawData.items.forEach(async (item:any) =>
-	videoURL.push(await Firebase.Storage.GetLink(item.name))
+	rawData.items.forEach(async (item: any) =>
+		videoURL.push(await Firebase.Storage.GetLink(item.name))
 	)
 
 	return await videoURL;
