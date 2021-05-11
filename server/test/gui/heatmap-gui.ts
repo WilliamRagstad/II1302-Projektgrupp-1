@@ -15,5 +15,36 @@ export function testHeatmapGui() {
 			await Sinco.assertUrlIs("https://airdash.herokuapp.com/");
 			await Sinco.done();
 		}
-	})
+	});
+	//Tests searchlocation not reloading page.
+	Deno.test({
+		name: "Test searchlocation not reloading page",
+		async fn() {
+			//Setup
+			const Sinco = new HeadlessBrowser();
+			await Sinco.build();
+			await Sinco.goTo("https://airdash.herokuapp.com/heatmap");
+
+			await Sinco.type('input#search-text', "stockholm");
+			await Sinco.click('button#searchlocation-btn');
+			await Sinco.assertUrlIs("https://airdash.herokuapp.com/heatmap");
+			await Sinco.done();
+		}
+	});
+	//Tests searchdate not reloading page.
+	Deno.test({
+		name: "Test searchdate not reloading page",
+		async fn() {
+			//Setup
+			const Sinco = new HeadlessBrowser();
+			await Sinco.build();
+			await Sinco.goTo("https://airdash.herokuapp.com/heatmap");
+
+			await Sinco.type('input#from', "2021-04-01");
+			await Sinco.type('input#to', "2021-05-01");
+			await Sinco.click('button#searchlocation-btn');
+			await Sinco.assertUrlIs("https://airdash.herokuapp.com/heatmap");
+			await Sinco.done();
+		}
+	});
 }
