@@ -23,7 +23,7 @@ export function testCodec() {
 			var data = Codec.Video("_*@^a1<+?3", {
 				MAC: "3E0C2CA38FB4"
 			});
-			assertEquals(data, { Succeeded: true, Result: { MAC: "3E0C2CA38FB4", Data: "_*@^a1<+?3" } })
+			assertEquals(data, { Succeeded: true, Result: { MAC: "3E0C2CA38FB4" } })
 		},
 	});
 }

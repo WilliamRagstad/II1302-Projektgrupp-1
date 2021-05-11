@@ -23,21 +23,6 @@ export interface Coordinate {
 	long: number;
 }
 
-//Uploads JSON data to firestore
-export async function uploadCoordinates(data: InfoResult) {
-	console.log(await Firebase.Firestore.CreateDocument('testhttp', '', { // 'testdata'
-		lat: {
-			doubleValue: data.GPS.lat
-		},
-		long: {
-			doubleValue: data.GPS.long
-		},
-		mac: {
-			stringValue: data.MAC
-		}
-	}));
-}
-
 //Calls on Firebase Firestore to retrieve data from the collection 'testdata' with a maximum of maxCount nodes.
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);
@@ -47,11 +32,11 @@ async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 
 //Calls on Firebase Firestore to retrieve data from the collection 'testdate' with a maximum of maxCount nodes and timestamps between fromdate and todate.
 async function getCoordinatesByTime(maxCount: number, fromdate: Date, todate: Date) {
-	const rawData = await Firebase.Firestore.GetPath('testDate', maxCount);
+	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
 	var coordinates: Coordinate[] = [];
 	rawData.documents.forEach((data: any) => {
-		if (new Date(data.fields.timestamp.timestampValue) >= fromdate && new Date(data.fields.timestamp.timestampValue) <= todate)
+		if (new Date(data.createTime) >= fromdate && new Date(data.createTime) <= todate) 
 			coordinates.push({ lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue });
 	});
 	return coordinates;
@@ -64,6 +49,6 @@ export async function heatmapHandler() {
 export async function heatmapByTimeHandler(c: Context) {
 	const { from, to } = c.params as { from: string, to: string }
 	const fromdate = new Date(from);
-	const todate = new Date(to);
-	return await getCoordinatesByTime(100, fromdate, todate);
+	const todate = new Date(to + "T23:59:00.000000Z");
+	return await getCoordinatesByTime(1000, fromdate, todate);
 }

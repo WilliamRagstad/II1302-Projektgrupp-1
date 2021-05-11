@@ -16,23 +16,33 @@ import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 
+function randomID(): string {
+	return Math.random().toString(36).slice(2);
+}
+
+function fileExtension(mime: string): string {
+	switch (mime) {
+		case 'image/png': return '.png';
+		case 'video/mp4': return '.mp4';
+		default: return '.unknown.txt';
+	}
+}
+
 export const videoHandler: HandlerFunc = async (c: Context) => {
-	// console.log(c);
-	const request = await c.body;
-	const content = typeof request == 'object' ? JSON.stringify(request) : '' + request;
-	console.log(`Request Body (${typeof request}): ${content}`);
+	const file = await c.body;
+	// console.log(`Request Body (${typeof request}): ${content}`);
 
 	const headers: CustomHeaders = Codec.CustomHeaders(c);
-	const data = Codec.Video(content, headers);
+	const data = Codec.Video(file, headers);
+	const mime = c.request.headers.get('Content-Type');
+	if (mime == null) throw new ErrorHandler("Expected Content-Type header", 400);
+	const fileExt = fileExtension(mime);
 	if (data.Succeeded) {
-		console.log('Parsed', data.Result);
-		console.log(`Uploading ${data.Result.MAC}.txt...`);
-
-		const uploadResult = await Firebase.Storage.Upload('mac-1', data.Result.MAC + '.txt', data.Result.Data);
-		console.log('Upload result', uploadResult);
+		console.log(`Parsed: ${mime}`);
 
 		try {
-			return "OK\nParsed: " + JSON.stringify(data.Result);
+			console.log(await Firebase.Storage.Upload(data.Result.MAC, randomID() + fileExt, file, mime));
+			return "OK\nParsed: " + mime;
 		} catch (error) {
 			throw new ErrorHandler(error.message, error.status || 500);
 		}

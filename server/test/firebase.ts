@@ -2,15 +2,6 @@ import { assertEquals } from "https://deno.land/std@0.94.0/testing/asserts.ts";
 import { Firebase } from '../lib/firebaseClient.ts';
 
 export function testFirebase() {
-	//Tests the Get function for the Firestore, retrieving test data.
-	Deno.test({
-		name: "Firestore Client Get Test",
-		async fn() {
-			const rawData = await Firebase.Firestore.GetPath("test", 1);
-			assertEquals(rawData.documents[0].fields.sampleData.stringValue, "Hello!");
-		},
-	});
-
 	//Tests the ListObjects function for Firebase Storage
 	Deno.test({
 		name: "Firebase Storage ListObjects Test",

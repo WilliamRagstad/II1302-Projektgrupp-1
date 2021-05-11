@@ -8,8 +8,7 @@ export type CodecResult<T> = {
 	ErrorMessage: string
 }
 export type VideoResult = {
-	MAC: string,
-	Data: string // Video data is formatted as a string.
+	MAC: string
 }
 export type InfoResult = {
 	MAC: string,
@@ -76,13 +75,13 @@ export const Codec = {
 		});
 		return result;
 	},
-	Video: function (file: string, headers: CustomHeaders): CodecResult<VideoResult> {
+	Video: function (file: unknown, headers: CustomHeaders): CodecResult<VideoResult> {
 		if (!headers["MAC"]) return Expected('MAC-address');
+		if (!file) return Expected('File content');
 		return {
 			Succeeded: true,
 			Result: {
-				MAC: headers["MAC"],
-				Data: file
+				MAC: headers["MAC"]
 			}
 		};
 	},

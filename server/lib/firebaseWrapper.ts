@@ -126,7 +126,8 @@ class FirebaseClient {
 			const options: RequestInit = { method };
 			if (headers) options.headers = headers
 			if (body) options.body = body;
-			console.log(`Sending request to: ${this.storage}${path} with: ${JSON.stringify(options)}`)
+			const optionsString = JSON.stringify(options);
+			console.log(`Sending request to: ${this.storage}${path} with: ${optionsString.length > 200 ? optionsString.slice(0, 200) + '...' : optionsString}`)
 			const res = await fetch(path, options);
 			return toJSON ? await res.json() : res;
 		},

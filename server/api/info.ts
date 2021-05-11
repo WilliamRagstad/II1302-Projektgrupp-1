@@ -12,9 +12,9 @@
 */
 
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
-import { uploadCoordinates, Coordinate } from "./heatmap.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
+import { Firebase } from '../lib/firebaseClient.ts';
 
 export const infoHandler: HandlerFunc = async (c: Context) => {
 	// console.log(c);
@@ -30,7 +30,17 @@ export const infoHandler: HandlerFunc = async (c: Context) => {
 		console.log('Parsed', data.Result);
 
 		try {
-			await uploadCoordinates(data.Result);
+			console.log(await Firebase.Firestore.CreateDocument('testhttp', '', {
+				lat: {
+					doubleValue: data.Result.GPS.lat
+				},
+				long: {
+					doubleValue: data.Result.GPS.long
+				},
+				mac: {
+					stringValue: data.Result.MAC
+				}
+			}));
 			return "OK\nParsed: " + JSON.stringify(data.Result);
 		} catch (error) {
 			throw new ErrorHandler(error.message, error.status || 500);
