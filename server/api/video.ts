@@ -29,9 +29,7 @@ function fileExtension(mime: string): string {
 }
 
 export const videoHandler: HandlerFunc = async (c: Context) => {
-	// console.log(c);
-	const request = await c.body;
-	const file = typeof request == 'object' ? JSON.stringify(request) : '' + request;
+	const file = await c.body;
 	// console.log(`Request Body (${typeof request}): ${content}`);
 
 	const headers: CustomHeaders = Codec.CustomHeaders(c);
