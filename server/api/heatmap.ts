@@ -11,6 +11,9 @@ import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
  * 	Author: William Axbrink
  * 	Created: 2021-05-03
  *
+ *  Edited: William Rågstad
+ *  Date: 2021-05-11
+ *
  * ****************************************************************************************************
 */
 
@@ -21,7 +24,7 @@ export interface Coordinate {
 
 //Uploads JSON data to firestore
 export async function uploadCoordinates(data: Coordinate) {
-	console.log(await Firebase.Firestore.CreateDocument('testhttp', '', {
+	console.log(await Firebase.Firestore.CreateDocument('testdata', '', { // 'testhttp'
 		lat: {
 			doubleValue: data.lat
 		},
