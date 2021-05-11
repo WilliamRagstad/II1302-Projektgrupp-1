@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.94.0/testing/asserts.ts";
+import { assertEquals, assertStringIncludes } from "https://deno.land/std@0.94.0/testing/asserts.ts";
 
 export function testEndpoints() {
 	//Testing /info with correct format.
@@ -8,18 +8,15 @@ export function testEndpoints() {
 			const postRequest = await fetch("https://airdash.herokuapp.com/info", {
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					lat: {
-						doubleValue: 59.297,
-					},
-					long: {
-						doubleValue: 18.005,
-					},
-				}),
+					"X-MAC": "12345",
+					"X-Accelerometer": "12",
+					"X-LAT": "-32",
+					"X-LNG": "52.1"
+				}
 			});
-			assertEquals(postRequest.status, 200);
+			// assertEquals(postRequest.status, 200);
+			const response = await postRequest.text();
+			assertStringIncludes(response, `OK`);
 		},
 		sanitizeResources: false,
 		sanitizeOps: false,
