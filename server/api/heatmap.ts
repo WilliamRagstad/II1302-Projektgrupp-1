@@ -25,18 +25,18 @@ export interface Coordinate {
 
 //Calls on Firebase Firestore to retrieve data from the collection 'testdata' with a maximum of maxCount nodes.
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
-	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);
+	const rawData = await Firebase.Firestore.GetPath('data', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
 	return rawData.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
 }
 
 //Calls on Firebase Firestore to retrieve data from the collection 'testdate' with a maximum of maxCount nodes and timestamps between fromdate and todate.
 async function getCoordinatesByTime(maxCount: number, fromdate: Date, todate: Date) {
-	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);
+	const rawData = await Firebase.Firestore.GetPath('data', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
 	var coordinates: Coordinate[] = [];
 	rawData.documents.forEach((data: any) => {
-		if (new Date(data.createTime) >= fromdate && new Date(data.createTime) <= todate) 
+		if (new Date(data.createTime) >= fromdate && new Date(data.createTime) <= todate)
 			coordinates.push({ lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue });
 	});
 	return coordinates;

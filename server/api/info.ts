@@ -30,7 +30,7 @@ export const infoHandler: HandlerFunc = async (c: Context) => {
 		console.log('Parsed', data.Result);
 
 		try {
-			console.log(await Firebase.Firestore.CreateDocument('testhttp', '', {
+			console.log(await Firebase.Firestore.CreateDocument('data', '', {
 				lat: {
 					doubleValue: data.Result.GPS.lat
 				},
