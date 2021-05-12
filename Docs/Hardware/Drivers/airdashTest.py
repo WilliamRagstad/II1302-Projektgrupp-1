@@ -1,5 +1,8 @@
+import random
+import decimal
 import smbus
 import requests
+import subprocess
 from time import sleep
 from picamera import PiCamera
 
@@ -88,30 +91,26 @@ file1.close()
 
 
 #netcode goes here
-latitude = 39.90564
-longitude = 116.39755
+latitude = random.choice(range(-90, 90)) + decimal.Decimal(random.choice(range(00000, 99999))/100000)
+longitude = random.choice(range(-90, 90)) + decimal.Decimal(random.choice(range(00000, 99999))/100000)
 
 headers  = { 'content-type' : 'application/raw', 'content-legnth' : '128',
 	"x-MAC": '133742069', "x-Accelerometer": '{accVal}'.format(accVal = highestA),
 	"x-Lat": '{Lat}'.format(Lat = latitude), 
 	"x-Lng": '{Long}'.format(Long = longitude)}
 
-data = { 'content-type' : 'application/raw', 'content-legnth' : '128',
-	"x-MAC": '133742069', "x-Accelerometer": '{accVal}'.format(accVal = highestA),
-	"x-Lat": '{Lat}'.format(Lat = latitude), 
-	"x-Lng": '{Long}'.format(Long = longitude)}
+fileheader = { 'content-type' : 'video/h264',
+	"x-MAC": '8008135'}
 
-#x = requests.post('http://airdash.herokuapp.com/info', headers = headers,
-#	data = data)
+x = requests.post('http://airdash.herokuapp.com/info', headers = headers)
 #print(x.text)
 print(x.status_code)
 
 
 files ={'files': open('airdashVideo.h264','rb')}
 
-
-#x = requests.post('http://airdash.herokuapp.com/video', headers = headers,
-#	files=files) 
+x = requests.post('http://airdash.herokuapp.com/video', headers = fileheader,
+	data=open('airdashVideo.h264','rb')) 
 
 #print(x.text)
 print(x.status_code)
