@@ -20,6 +20,7 @@ import { Codec, CustomHeaders } from '../lib/codec.ts';
 const framerate = 24;
 const denoDir = decodeURI(new URL('.', import.meta.url).pathname);
 const convert = denoDir + "convert_tmp/";
+const ffmpegWin = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
 
 function randomID(): string {
 	return Math.random().toString(36).slice(2);
@@ -69,7 +70,16 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 			const convertCommand = ["ffmpeg", "-framerate", '' + framerate, "-i", inFilePath, outFilePath];
 			console.log('> Running:', ...convertCommand);
 
-			const p = Deno.run({ cmd: convertCommand });
+			let p;
+			try {
+				p = Deno.run({ cmd: convertCommand });
+			} catch {
+				// This will run locally on windows
+				console.log("> Failed to run command", convertCommand[0], "-> Running windows .exe in /lib/video...")
+				convertCommand[0] = ffmpegWin;
+				p = Deno.run({ cmd: convertCommand });
+			}
+
 			const { code } = await p.status();
 			if (code !== 0) {
 				const errorMessage = "> Failed to convert h264 file to mp4!";
