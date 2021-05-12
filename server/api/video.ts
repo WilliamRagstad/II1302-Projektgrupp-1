@@ -21,6 +21,7 @@ const frmt = 24;
 const denoDir = decodeURI(new URL('.', import.meta.url).pathname);
 const convert = denoDir + "convert_tmp/";
 const ffmpeg = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
+const ffmpegUbuntu = Deno.realPathSync(denoDir + "../lib/video/ffmpeg_ubuntu");
 
 function randomID(): string {
 	return Math.random().toString(36).slice(2);
@@ -70,7 +71,14 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 			const convertCommand = [ffmpeg, "-framerate", '' + frmt, "-i", inFilePath, outFilePath];
 			console.log('> Running:', ...convertCommand);
 
-			const p = Deno.run({ cmd: convertCommand });
+			let p;
+			try {
+				p = Deno.run({ cmd: convertCommand });
+			} catch {
+				console.log("> Failed to run", convertCommand[0], "-> Attempting ubuntu version...")
+				convertCommand[0] = ffmpegUbuntu;
+				p = Deno.run({ cmd: convertCommand });
+			}
 			const { code } = await p.status();
 			if (code !== 0) {
 				const errorMessage = "> Failed to convert h264 file to mp4!";
