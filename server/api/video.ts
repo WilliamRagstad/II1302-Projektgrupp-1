@@ -24,6 +24,8 @@ function fileExtension(mime: string): string {
 	switch (mime) {
 		case 'image/png': return '.png';
 		case 'video/mp4': return '.mp4';
+		case 'video/h264': return '.h264';
+		case 'audio/mpeg': return '.mpeg';
 		default: return '.unknown.txt';
 	}
 }
