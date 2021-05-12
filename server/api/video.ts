@@ -20,7 +20,7 @@ import { Codec, CustomHeaders } from '../lib/codec.ts';
 const frmt = 24;
 const denoDir = decodeURI(new URL('.', import.meta.url).pathname);
 const convert = denoDir + "convert_tmp/";
-const ffmpeg = denoDir + "../lib/video/ffmpeg.exe";
+const ffmpeg = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
 
 function randomID(): string {
 	return Math.random().toString(36).slice(2);
@@ -68,7 +68,7 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 
 			console.log('> Converting', inFile, 'to', outFile);
 			const convertCommand = [ffmpeg, "-framerate", '' + frmt, "-i", inFilePath, outFilePath];
-			// console.log(...convertCommand);
+			console.log('> Running:', ...convertCommand);
 
 			const p = Deno.run({ cmd: convertCommand });
 			const { code } = await p.status();
