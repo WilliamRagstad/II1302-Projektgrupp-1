@@ -41,6 +41,6 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
       - name: Run Tests
-        run: deno test --allow-net --allow-read --allow-run server/test/gui/index.ts
+        run: deno test --allow-net --allow-read --allow-run server/test/daily/index.ts
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
