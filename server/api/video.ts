@@ -17,7 +17,7 @@ import { ensureDir } from "https://deno.land/std@0.96.0/fs/ensure_dir.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 
-const frmt = 24;
+const framerate = 24;
 const denoDir = decodeURI(new URL('.', import.meta.url).pathname);
 const convert = denoDir + "convert_tmp/";
 
@@ -66,7 +66,7 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 			// Deno.sleepSync(100); // Wait for file to completely transfer.
 
 			console.log('> Converting', inFile, 'to', outFile);
-			const convertCommand = ["ffmpeg", "-framerate", '' + frmt, "-i", inFilePath, outFilePath];
+			const convertCommand = ["ffmpeg", "-framerate", '' + framerate, "-i", inFilePath, outFilePath];
 			console.log('> Running:', ...convertCommand);
 
 			const p = Deno.run({ cmd: convertCommand });
