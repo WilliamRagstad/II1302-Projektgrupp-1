@@ -88,9 +88,6 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 			console.log("> Cleaning up temporary files...");
 			Deno.removeSync(inFilePath);
 			Deno.removeSync(outFilePath);
-
-			console.log(upload);
-			return `OK\nParsed ${mime}: ${upload.name}`;
 		}
 		else {
 			try {
@@ -98,9 +95,9 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 			} catch (error) {
 				throw new ErrorHandler(error.message, error.status || 500);
 			}
-			console.log(upload);
-			return `OK\nParsed ${mime}: ${upload.name}`;
 		}
+		console.log(upload);
+		return `OK\nParsed ${mime}: ${upload.name}`;
 	}
 	else throw new ErrorHandler(data.ErrorMessage, 400);
 }
