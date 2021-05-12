@@ -21,7 +21,8 @@ async function initMap() {
     const HEATMAP_DATA = await API.Get('/data');
     if (HEATMAP_DATA != null) {
         heatmap = new window.google.maps.visualization.HeatmapLayer({
-            data: createHeatmap(HEATMAP_DATA)
+            data: createHeatmap(HEATMAP_DATA),
+            maxIntensity: 5
         });
         heatmap.setMap(map);
     } else console.log("No heatmap data available.");

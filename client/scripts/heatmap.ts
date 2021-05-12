@@ -34,7 +34,8 @@ export async function initMap() {
 	const HEATMAP_DATA = await API.Get('/data'); //Awaits the promise before continuing and adding the data.
 	if (HEATMAP_DATA != null) {
 		heatmap = new window.google.maps.visualization.HeatmapLayer({
-			data: createHeatmap(HEATMAP_DATA)
+			data: createHeatmap(HEATMAP_DATA),
+      maxIntensity: 5
 		});
 		heatmap.setMap(map);
 	}
