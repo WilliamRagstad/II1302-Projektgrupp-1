@@ -13,6 +13,7 @@
 
 import { Firebase } from '../lib/firebaseClient.ts';
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.96.0/fs/ensure_dir.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 
@@ -60,7 +61,8 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 			const outFile = fileID + '.mp4';
 			const outFilePath = convert + outFile;
 
-			console.log('> Found h264 raw movie! Writing file to disk...');
+			console.log('> Found h264 raw movie! Writing file to disk:', inFilePath);
+			await ensureDir(convert);
 			Deno.writeFileSync(inFilePath, fileBuffer);
 			// Deno.sleepSync(100); // Wait for file to completely transfer.
 
