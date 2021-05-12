@@ -18,7 +18,7 @@ import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 
 const frmt = 24;
-const denoDir = decodeURI(new URL('.', import.meta.url).pathname).replace('/', '');
+const denoDir = decodeURI(new URL('.', import.meta.url).pathname);
 const convert = denoDir + "convert_tmp/";
 const ffmpeg = denoDir + "../lib/video/ffmpeg.exe";
 
