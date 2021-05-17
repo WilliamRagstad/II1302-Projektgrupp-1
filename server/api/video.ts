@@ -18,7 +18,8 @@ import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 
 const framerate = 24;
-const denoDir = decodeURI(new URL('.', import.meta.url).pathname);
+let denoDir = decodeURI(new URL('.', import.meta.url).pathname);
+denoDir = denoDir.startsWith('/') ? denoDir.replace('/', '') : denoDir;
 const convert = denoDir + "convert_tmp/";
 const ffmpegWin = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
 
