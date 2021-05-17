@@ -12,10 +12,11 @@ const API = {
 async function generateTableContent(mac) {
     const URL1 = await API.Get('video/' + mac);
     var videos = [];
+    console.log(URL1);
     URL1.forEach((item)=>videos.push({
             MAC: mac,
             Date: new Date().toDateString(),
-            Link: item
+            Video: item
         })
     );
     return videos;
@@ -41,7 +42,7 @@ function generateTable(table, data) {
         cell2.appendChild(text2);
         const cell3 = row.insertCell();
         const iframe = window.document.createElement("iframe");
-        iframe.src = element.Link;
+        iframe.src = element.Video;
         cell3.appendChild(iframe);
     }
 }

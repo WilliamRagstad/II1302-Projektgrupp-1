@@ -9,9 +9,8 @@ declare global {
 async function generateTableContent(mac:any){
 	const URL = await API.Get('video/'+mac);
 	var videos: any[] = [];
-
 	URL.forEach((item: any) =>
-		videos.push({ MAC: mac, Date: new Date().toDateString(), Link: item })
+		videos.push({ MAC: mac, Date: new Date().toDateString(), Video: item })
 	)
 	return videos;
 }
@@ -43,7 +42,7 @@ function generateTable(table: any, data: any) {
 
 		const cell3 = row.insertCell();
 		const iframe = window.document.createElement("iframe");
-		iframe.src = element.Link;
+		iframe.src = element.Video;
 		cell3.appendChild(iframe);
 	}
 }
