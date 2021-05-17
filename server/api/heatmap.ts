@@ -30,7 +30,7 @@ async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
 	return rawData.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
 }
 
-//Calls on Firebase Firestore to retrieve data from the collection 'testdate' with a maximum of maxCount nodes and timestamps between fromdate and todate.
+//Calls on Firebase Firestore to retrieve data from the collection 'data' with a maximum of maxCount nodes and timestamps between fromdate and todate.
 async function getCoordinatesByTime(maxCount: number, fromdate: Date, todate: Date) {
 	const rawData = await Firebase.Firestore.GetPath('data', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];

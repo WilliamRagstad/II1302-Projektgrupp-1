@@ -12,11 +12,9 @@ const API = {
 async function generateTableContent(mac) {
     const URL1 = await API.Get('video/' + mac);
     var videos = [];
-    console.log(URL1);
     URL1.forEach((item)=>videos.push({
-            MAC: mac,
-            Date: new Date().toDateString(),
-            Video: item
+            Date: new Date(item.Date).toLocaleDateString(),
+            Video: item.URL
         })
     );
     return videos;
@@ -34,9 +32,6 @@ function generateTableHead(table, data) {
 function generateTable(table, data) {
     for (const element of data){
         const row = table.insertRow();
-        const cell1 = row.insertCell();
-        const text1 = window.document.createTextNode(element.MAC);
-        cell1.appendChild(text1);
         const cell2 = row.insertCell();
         const text2 = window.document.createTextNode(element.Date);
         cell2.appendChild(text2);
@@ -67,4 +62,4 @@ async function createTable(mac) {
     generateTableHead(table, data);
     generateTable(table, videos);
 }
-createTable("88:88:88:88");
+createTable("mac-1");

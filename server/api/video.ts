@@ -126,11 +126,10 @@ export async function videoByIDHandler(c: Context) {
 async function getVideos(mac: any) {
 	const rawData = await Firebase.Storage.List(mac);
 	var videoURL: any[] = [];
-	rawData.items.forEach(async (item: any) =>
-		videoURL.push(await Firebase.Storage.GetLink(item.name))
-	)
-
-	return await videoURL;
+	for(const item of rawData.items) {
+		videoURL.push({ URL: Firebase.Storage.GetLink(item.name), Date: new Date((await Firebase.Storage.Metadata(item.name)).timeCreated) })
+	}
+	return videoURL;
 }
 
 

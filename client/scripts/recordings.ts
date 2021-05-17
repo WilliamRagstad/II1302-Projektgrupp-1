@@ -10,7 +10,7 @@ async function generateTableContent(mac:any){
 	const URL = await API.Get('video/'+mac);
 	var videos: any[] = [];
 	URL.forEach((item: any) =>
-		videos.push({ MAC: mac, Date: new Date().toDateString(), Video: item })
+		videos.push({ Date: new Date((item.Date)).toLocaleDateString(), Video: item.URL })
 	)
 	return videos;
 }
@@ -31,10 +31,6 @@ function generateTableHead(table: any, data: any) {
 function generateTable(table: any, data: any) {
 	for (const element of data) {
 		const row = table.insertRow();
-
-		const cell1 = row.insertCell();
-		const text1 = window.document.createTextNode(element.MAC);
-		cell1.appendChild(text1);
 
 		const cell2 = row.insertCell();
 		const text2 = window.document.createTextNode(element.Date);
@@ -64,5 +60,5 @@ async function createTable(mac:any){
 	generateTableHead(table, data);
 	generateTable(table, videos);
 }
-//88:88:88:88 is a placeholder, supposed to be ""
-createTable("88:88:88:88");
+//mac-1 is a placeholder, supposed to be ""
+createTable("mac-1");
