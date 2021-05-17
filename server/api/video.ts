@@ -21,7 +21,10 @@ const framerate = 24;
 let denoDir = decodeURI(new URL('.', import.meta.url).pathname);
 denoDir = denoDir.startsWith('/') ? denoDir.replace('/', '') : denoDir;
 const convert = denoDir + "convert_tmp/";
-const ffmpegWin = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
+let ffmpegWin = '';
+try {
+	ffmpegWin = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
+} catch { /* Ignore */ }
 
 function randomID(): string {
 	return Math.random().toString(36).slice(2);
