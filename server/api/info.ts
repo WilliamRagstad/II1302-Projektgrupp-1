@@ -27,7 +27,7 @@ function AddrToString(address: Deno.Addr) {
 }
 
 export const infoHandler: HandlerFunc = async (c: Context) => {
-	// console.log(c);
+	// IP Address is not liable as Heroku is using a proxy.
 	const localIP = c.request.conn.localAddr;
 	const clientIP = c.request.conn.remoteAddr;
 	console.log(`Local IP: ${AddrToString(localIP)}, Client IP: ${AddrToString(clientIP)}`);
