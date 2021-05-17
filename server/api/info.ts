@@ -16,8 +16,22 @@ import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
 import { Firebase } from '../lib/firebaseClient.ts';
 
+function instanceOfNetAddr(addr: Deno.Addr): addr is Deno.NetAddr { return 'hostname' in addr; }
+function instanceOfUnixAddr(addr: Deno.UnixAddr): addr is Deno.UnixAddr { return 'path' in addr; }
+
+function AddrToString(address: Deno.Addr) {
+	if (instanceOfNetAddr(address)) return `${address.hostname}:${address.port}`;
+	if (instanceOfUnixAddr(address)) return address.path;
+	throw new Error("Address is not of type NetAddr nor UnixAddr!");
+
+}
+
 export const infoHandler: HandlerFunc = async (c: Context) => {
-	// console.log(c);
+	// IP Address is not liable as Heroku is using a proxy.
+	const localIP = c.request.conn.localAddr;
+	const clientIP = c.request.conn.remoteAddr;
+	console.log(`Local IP: ${AddrToString(localIP)}, Client IP: ${AddrToString(clientIP)}`);
+
 	const request = await c.body;
 	const content: string = typeof request == 'object' ? JSON.stringify(request) : '' + request;
 	const headers: CustomHeaders = Codec.CustomHeaders(c);

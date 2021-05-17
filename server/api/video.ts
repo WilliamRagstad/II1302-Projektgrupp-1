@@ -13,8 +13,18 @@
 
 import { Firebase } from '../lib/firebaseClient.ts';
 import { HandlerFunc, Context } from "https://deno.land/x/abc@v1.3.0/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.96.0/fs/ensure_dir.ts";
 import { ErrorHandler } from '../lib/errorHandler.ts';
 import { Codec, CustomHeaders } from '../lib/codec.ts';
+
+const framerate = 24;
+let denoDir = decodeURI(new URL('.', import.meta.url).pathname);
+denoDir = denoDir.startsWith('/') ? denoDir.replace('/', '') : denoDir;
+const convert = denoDir + "convert_tmp/";
+let ffmpegWin = '';
+try {
+	ffmpegWin = Deno.realPathSync(denoDir + "../lib/video/ffmpeg.exe");
+} catch { /* Ignore */ }
 
 function randomID(): string {
 	return Math.random().toString(36).slice(2);
@@ -46,13 +56,63 @@ export const videoHandler: HandlerFunc = async (c: Context) => {
 	if (data.Succeeded) {
 		console.log(`Parsed: ${mime} size: ${fileBuffer.length}`);
 
-		try {
-			const upload = await Firebase.Storage.Upload(data.Result.MAC, randomID() + fileExt, fileBuffer, mime);
-			console.log(upload);
-			return `OK\nParsed ${mime}: ${upload.name}`;
-		} catch (error) {
-			throw new ErrorHandler(error.message, error.status || 500);
+		let upload;
+		const fileID = randomID();
+		if (mime === 'video/h264') {
+			// Convert to MP4
+			const inFile = fileID + fileExt;
+			const inFilePath = convert + inFile;
+			const outFile = fileID + '.mp4';
+			const outFilePath = convert + outFile;
+
+			console.log('> Found h264 raw movie! Writing file to disk:', inFilePath);
+			await ensureDir(convert);
+			Deno.writeFileSync(inFilePath, fileBuffer);
+			// Deno.sleepSync(100); // Wait for file to completely transfer.
+
+			console.log('> Converting', inFile, 'to', outFile);
+			const convertCommand = ["ffmpeg", "-framerate", '' + framerate, "-i", inFilePath, outFilePath];
+			console.log('> Running:', ...convertCommand);
+
+			let p;
+			try {
+				p = Deno.run({ cmd: convertCommand });
+			} catch {
+				// This will run locally on windows
+				console.log("> Failed to run command", convertCommand[0], "-> Running windows .exe in /lib/video...")
+				convertCommand[0] = ffmpegWin;
+				p = Deno.run({ cmd: convertCommand });
+			}
+
+			const { code } = await p.status();
+			if (code !== 0) {
+				const errorMessage = "> Failed to convert h264 file to mp4!";
+				console.log(errorMessage);
+				throw new ErrorHandler(errorMessage, 500);
+			}
+			console.log('> Successfully Converted h264 file to mp4!');
+			const convertedFile = await Deno.open(outFilePath);
+			const convertedFileBuffer: Uint8Array = await Deno.readAll(convertedFile);
+
+			try {
+				upload = await Firebase.Storage.Upload(data.Result.MAC, outFile, convertedFileBuffer, 'video/mp4');
+			} catch (error) {
+				throw new ErrorHandler(error.message, error.status || 500);
+			}
+
+			console.log("> Cleaning up temporary files...");
+			Deno.removeSync(inFilePath);
+			Deno.removeSync(outFilePath);
 		}
+		else {
+			try {
+				upload = await Firebase.Storage.Upload(data.Result.MAC, fileID + fileExt, fileBuffer, mime);
+			} catch (error) {
+				throw new ErrorHandler(error.message, error.status || 500);
+			}
+		}
+		console.log(upload);
+		return `OK\nParsed ${mime}: ${upload.name}`;
 	}
 	else throw new ErrorHandler(data.ErrorMessage, 400);
 }
