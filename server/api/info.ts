@@ -18,6 +18,10 @@ import { Firebase } from '../lib/firebaseClient.ts';
 
 export const infoHandler: HandlerFunc = async (c: Context) => {
 	// console.log(c);
+	const localIP = c.request.conn.localAddr;
+	const clientIP = c.request.conn.remoteAddr;
+	console.log(`Local IP: ${localIP}, Client IP: ${clientIP}`);
+
 	const request = await c.body;
 	const content: string = typeof request == 'object' ? JSON.stringify(request) : '' + request;
 	const headers: CustomHeaders = Codec.CustomHeaders(c);
