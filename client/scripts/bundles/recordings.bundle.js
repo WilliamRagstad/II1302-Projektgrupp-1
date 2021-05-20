@@ -58,6 +58,7 @@ window.document.getElementById('search-text').addEventListener('keydown', (e)=>e
 async function createTable(mac) {
     const table = window.document.querySelector("table");
     const videos = await generateTableContent(mac);
+    if (!videos || videos.length == 0) return;
     const data = Object.keys(videos[0]);
     generateTableHead(table, data);
     generateTable(table, videos);
