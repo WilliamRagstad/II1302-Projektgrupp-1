@@ -11,7 +11,7 @@ const argPort = parse(args).port;
 const HOST_PORT = argPort ? Number(argPort) : DEFAULT_PORT;
 
 const app = new Application();
-console.log("http://localhost:" + HOST_PORT + "/");
+console.log(HOST_PORT == 8000 ? "http://localhost:" + HOST_PORT + "/" : "https://airdash.herokuapp.com/");
 
 // Using Abc library: https://doc.deno.land/https/deno.land/x/abc/mod.ts
 // Library repository: https://github.com/zhmushan/abc
