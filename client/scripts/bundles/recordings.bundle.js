@@ -36,9 +36,19 @@ function generateTable(table, data) {
         const text2 = window.document.createTextNode(element.Date);
         cell2.appendChild(text2);
         const cell3 = row.insertCell();
-        const iframe = window.document.createElement("iframe");
-        iframe.src = element.URL + "&autoplay=0";
-        cell3.appendChild(iframe);
+        if (element.URL.split('?')[0].toLowerCase().endsWith("mp4")) {
+            const video = window.document.createElement("video");
+            video.controls = true;
+            video.height = 180;
+            const source = window.document.createElement("source");
+            source.src = element.URL;
+            video.appendChild(source);
+            cell3.appendChild(video);
+        } else {
+            const iframe = window.document.createElement("iframe");
+            iframe.src = element.URL;
+            cell3.appendChild(iframe);
+        }
     }
 }
 function searchID() {
