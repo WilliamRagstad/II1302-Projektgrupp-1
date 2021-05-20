@@ -38,7 +38,7 @@ function generateTable(table: any, data: any) {
 
 		const cell3 = row.insertCell();
 		const iframe = window.document.createElement("iframe");
-		iframe.src = element.URL + "&autoplay=0";
+		iframe.src = element.URL;
 		cell3.appendChild(iframe);
 	}
 }
