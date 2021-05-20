@@ -25,7 +25,7 @@ export interface Coordinate {
 
 //Calls on Firebase Firestore to retrieve data from the collection 'testdata' with a maximum of maxCount nodes.
 async function getCoordinates(maxCount: number): Promise<Coordinate[]> {
-	const rawData = await Firebase.Firestore.GetPath('testdata', maxCount);
+	const rawData = await Firebase.Firestore.GetPath('data', maxCount);
 	if (rawData.documents == undefined || rawData.documents.length == 0) return await [];
 	return rawData.documents.map((data: any): Coordinate => { return { lat: data.fields.lat.doubleValue, long: data.fields.long.doubleValue } })
 }
