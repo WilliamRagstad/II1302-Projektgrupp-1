@@ -14,7 +14,7 @@ async function generateTableContent(mac) {
     var videos = [];
     URL1.forEach((item)=>videos.push({
             Date: new Date(item.Date).toLocaleDateString(),
-            Video: item.URL
+            URL: item.URL
         })
     );
     return videos;
@@ -37,7 +37,7 @@ function generateTable(table, data) {
         cell2.appendChild(text2);
         const cell3 = row.insertCell();
         const iframe = window.document.createElement("iframe");
-        iframe.src = element.Video;
+        iframe.src = element.URL + "&autoplay=0";
         cell3.appendChild(iframe);
     }
 }

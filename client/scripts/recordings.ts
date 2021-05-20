@@ -10,7 +10,7 @@ async function generateTableContent(mac:any){
 	const URL = await API.Get('video/'+mac);
 	var videos: any[] = [];
 	URL.forEach((item: any) =>
-		videos.push({ Date: new Date((item.Date)).toLocaleDateString(), Video: item.URL })
+		videos.push({ Date: new Date((item.Date)).toLocaleDateString(), URL: item.URL })
 	)
 	return videos;
 }
@@ -38,7 +38,7 @@ function generateTable(table: any, data: any) {
 
 		const cell3 = row.insertCell();
 		const iframe = window.document.createElement("iframe");
-		iframe.src = element.Video;
+		iframe.src = element.URL + "&autoplay=0";
 		cell3.appendChild(iframe);
 	}
 }
